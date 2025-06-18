@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MTSS Intervention Bank</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Light blue-gray background */
+        }
+        /* Custom styles for button hover effects and active state */
+        .btn-math:hover {
+            background-color: #3b82f6; /* Darker blue on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .btn-reading:hover {
+            background-color: #84cc16; /* Darker lime green on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .intervention-section {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s ease-out; /* Smooth transition for expand/collapse */
+        }
+        .intervention-section.active {
+            max-height: 5000px; /* Increased value to cover more content */
+            transition: max-height 0.7s ease-in;
+        }
+        .intervention-item {
+            margin-bottom: 0.5rem;
+            position: relative; /* Needed for absolute positioning of button if desired, or just flex */
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .intervention-item > strong {
+            flex-basis: 100%; /* Makes title take full width */
+            margin-bottom: 0.25rem;
+        }
+        .assessment-note {
+            font-size: 0.85em;
+            color: #4b5563; /* Gray-700 */
+            margin-top: 0.2rem;
+            font-style: italic;
+            flex-grow: 1; /* Allows it to take up available space */
+            line-height: 1.2; /* Adjust line height for better spacing with button */
+        }
+        .print-assessment-btn {
+            white-space: nowrap; /* Prevent button text from wrapping */
+            margin-left: auto; /* Push button to the right */
+            margin-top: 0.5rem; /* Space from intervention text */
+            margin-bottom: 0.5rem;
+        }
+        /* Styles for the printable document (to be injected into new window) */
+        @media print {
+            .print-button {
+                display: none; /* Hide the print button when printing */
+            }
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-6 md:p-8">
+
+    <div class="max-w-6xl mx-auto bg-white rounded-xl shadow-lg p-6 md:p-10">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-center text-gray-800 mb-8">MTSS Intervention Bank</h1>
+        <p class="text-center text-gray-600 mb-10 text-lg">Select a grade level and subject to view banked interventions.</p>
+
+        <!-- Grade Level Sections -->
+        <div id="grade-levels-container" class="space-y-8">
+            <!-- Pre-K Section -->
+            <div class="grade-section bg-gray-50 p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold text-gray-700 mb-4 flex items-center justify-between">
+                    Pre-Kindergarten
+                    <div class="flex space-x-3">
+                        <button class="toggle-interventions btn-math bg-blue-500 text-white font-semibold py-2 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105" data-grade="pre-k" data-subject="math">
+                            Math
+                        </button>
+                        <button class="toggle-interventions btn-reading bg-lime-500 text-white font-semibold py-2 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105" data-grade="pre-k" data-subject="reading">
+                            Reading
+                        </button>
+                    </div>
+                </h2>
+                <!-- Pre-K Math Interventions -->
+                <div id="interventions-pre-k-math" class="intervention-section border-t border-gray-200 mt-4 pt-4">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Pre-K Math Interventions</h3>
+                    <div class="space-y-4">
+                        <!-- Category: Number and Operations -->
+                        <div>
+                            <h4 class="text-lg font-medium text-blue-700 mb-2">Number and Operations</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Counting Objects 1-10 with One-to-One Correspondence:** Students use manipulatives (e.g., counting bears, unifix cubes) to count a given set, physically touching each object as they say the number. Practice counting up to 10 objects.
+                                    <p class="assessment-note">Assessment: Direct observation, count objects to 10 on command, informal checklist.</p></li>
+                                <li class="intervention-item">**Numeral Identification 0-5:** Match numerals to quantities using flashcards, number puzzles, or sensory bins. Trace numerals in sand or shaving cream.
+                                    <p class="assessment-note">Assessment: Point to requested numeral, match numeral to set of objects (0-5), flashcard recognition.</p></li>
+                                <li class="intervention-item">**Quantity Comparison (More, Less, Same):** Use visual aids and concrete objects to compare sets. Engage in games like "Which pile has more?" or "Show me less than 3."
+                                    <p class="assessment-note">Assessment: Student correctly identifies "more," "less," or "same" when comparing two small sets (up to 5).</p></li>
+                                <li class="intervention-item">**Sorting by Attributes (Color, Size, Shape):** Provide diverse sets of objects (blocks, buttons) and guide students to sort by color, size, shape, or type. Discuss the categories used.
+                                    <p class="assessment-note">Assessment: Student sorts a given set of objects into correct categories based on a specified attribute.</p></li>
+                                <li class="intervention-item">**Subitizing Small Quantities (1-3):** Quickly recognize the number of objects in a small set without counting (e.g., dot patterns on dice, fingers).
+                                    <p class="assessment-note">Assessment: Flash dot cards (1-3) for 1-2 seconds; student states the quantity immediately.</p></li>
+                                <li class="intervention-item">**Number Order (1-5):** Arrange number cards or objects in sequential order from 1 to 5.
+                                    <p class="assessment-note">Assessment: Student correctly orders number cards 1-5 from a mixed set.</p></li>
+                                <li class="intervention-item">**Composing and Decomposing Numbers (up to 5):** Use part-part-whole mats and counters to show different ways to make a number (e.g., 5 can be 2 and 3).
+                                    <p class="assessment-note">Assessment: Given a total (e.g., 4), student shows two different combinations using manipulatives.</p></li>
+                                <li class="intervention-item">**Identifying Ordinal Numbers (First, Second, Third):** Use a line of students or objects to practice identifying "first," "second," and "third."
+                                    <p class="assessment-note">Assessment: Student points to the "first," "second," or "third" object in a small sequence.</p></li>
+                                <li class="intervention-item">**Simple Pattern Recognition (AB, AAB):** Create and extend simple patterns using blocks, beads, or movements.
+                                    <p class="assessment-note">Assessment: Student identifies the repeating unit in a pattern and extends it by at least two elements.</p></li>
+                                <li class="intervention-item">**Number Writing Practice (0-5):** Practice forming numerals 0-5 using playdoh, tracing, or writing on whiteboards.
+                                    <p class="assessment-note">Assessment: Student correctly writes numerals 0-5 when prompted (legibility check).</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Geometry -->
+                        <div>
+                            <h4 class="text-lg font-medium text-blue-700 mb-2">Geometry</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Basic Shape Recognition (Circle, Square, Triangle, Rectangle):** Use shape sorters, puzzles, and drawing activities for these core shapes. Go on a "shape hunt" in the classroom.
+                                    <p class="assessment-note">Assessment: Student points to or names requested shapes, identifies shapes in real-world objects.</p></li>
+                                <li class="intervention-item">**Shape Attributes:** Describe attributes of shapes (e.g., "a square has four equal sides," "a circle is round").
+                                    <p class="assessment-note">Assessment: Given a shape, student describes at least one defining attribute.</p></li>
+                                <li class="intervention-item">**Building with Shapes:** Use pattern blocks or tangrams to create new shapes or pictures, discussing the component shapes.
+                                    <p class="assessment-note">Assessment: Student successfully combines 2-3 basic shapes to create a larger, identifiable shape.</p></li>
+                                <li class="intervention-item">**Identifying 3D Shapes (Sphere, Cube, Cylinder):** Introduce and identify real-world examples of spheres, cubes, and cylinders.
+                                    <p class="assessment-note">Assessment: Student points to or names requested 3D shapes from a collection of objects.</p></li>
+                                <li class="intervention-item">**Spatial Relationships (In, On, Under):** Use positional words to describe the location of objects (e.g., "Put the block under the table").
+                                    <p class="assessment-note">Assessment: Student correctly places an object based on verbal directional cues.</p></li>
+                                <li class="intervention-item">**Matching Shapes:** Play matching games with identical 2D shapes.
+                                    <p class="assessment-note">Assessment: Student matches 5/5 identical shape pairs.</p></li>
+                                <li class="intervention-item">**Drawing Shapes:** Provide templates or verbal instructions for drawing basic shapes.
+                                    <p class="assessment-note">Assessment: Student independently draws recognizable circles, squares, and triangles.</p></li>
+                                <li class="intervention-item">**Shape Puzzles:** Work on simple 2-4 piece shape puzzles to develop spatial reasoning.
+                                    <p class="assessment-note">Assessment: Student completes a 3-piece shape puzzle independently.</p></li>
+                                <li class="intervention-item">**Sorting by Shape:** Provide a mixed set of objects and ask students to sort them by their geometric shape.
+                                    <p class="assessment-note">Assessment: Student correctly sorts objects into bins labeled with different shapes.</p></li>
+                                <li class="intervention-item">**Creating Shape Pictures:** Encourage students to create pictures using various cut-out geometric shapes.
+                                    <p class="assessment-note">Assessment: Student uses at least three different shapes to create a picture.</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Measurement and Data -->
+                        <div>
+                            <h4 class="text-lg font-medium text-blue-700 mb-2">Measurement and Data</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Comparing Lengths (Longer/Shorter):** Use non-standard units (e.g., paperclips, blocks) to compare the length of two objects. Introduce terms like "longer," "shorter," "same length."
+                                    <p class="assessment-note">Assessment: Given two objects, student correctly identifies which is "longer" or "shorter."</p></li>
+                                <li class="intervention-item">**Comparing Heights (Taller/Shorter):** Compare the height of students or objects using terms "taller" and "shorter."
+                                    <p class="assessment-note">Assessment: Student correctly identifies the "taller" or "shorter" of two individuals/objects.</p></li>
+                                <li class="intervention-item">**Comparing Weights (Heavier/Lighter):** Use a balance scale or direct comparison to identify "heavier" and "lighter" objects.
+                                    <p class="assessment-note">Assessment: Student predicts and then confirms which of two objects is "heavier" using a balance scale.</p></li>
+                                <li class="intervention-item">**Comparing Capacities (More/Less):** Use different sized containers and water/sand to explore "holds more" or "holds less."
+                                    <p class="assessment-note">Assessment: Student identifies which container "holds more" when comparing two visibly different containers.</p></li>
+                                <li class="intervention-item">**Creating Simple Patterns (AB, AAB):** Students use colored blocks, beads, or actions to create and extend simple repeating patterns.
+                                    <p class="assessment-note">Assessment: Student accurately creates and extends an AB pattern for at least three repetitions.</p></li>
+                                <li class="intervention-item">**Sorting and Classifying Objects:** Sort a collection of varied objects into categories based on one attribute (e.g., "all the red toys," "all the soft items").
+                                    <p class="assessment-note">Assessment: Student sorts a set of 5-7 objects into two categories based on a given attribute.</p></li>
+                                <li class="intervention-item">**Non-Standard Measurement:** Measure objects using unifix cubes or blocks placed end-to-end.
+                                    <p class="assessment-note">Assessment: Student measures a short object (e.g., a crayon) using 3-5 unifix cubes and states the number of cubes.</p></li>
+                                <li class="intervention-item">**Making Simple Bar Graphs (Pictographs):** Create a simple pictograph using sticky notes or drawings to represent data from a class poll (e.g., "Favorite Color").
+                                    <p class="assessment-note">Assessment: Student contributes their data point to a class pictograph and interprets one simple question ("Which is most popular?").</p></li>
+                                <li class="intervention-item">**Ordering by Size:** Arrange 3-4 objects from smallest to largest or shortest to longest.
+                                    <p class="assessment-note">Assessment: Student correctly orders 3 objects by length from shortest to longest.</p></li>
+                                <li class="intervention-item">**Understanding Time (Day/Night, Seasons):** Discuss daily routines associated with day and night, and talk about observable changes during different seasons.
+                                    <p class="assessment-note">Assessment: Student identifies at least two activities associated with "day" and "night."</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- Pre-K Reading Interventions -->
+                <div id="interventions-pre-k-reading" class="intervention-section border-t border-gray-200 mt-4 pt-4">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Pre-K Reading Interventions</h3>
+                    <div class="space-y-4">
+                        <!-- Category: Phonological Awareness -->
+                        <div>
+                            <h4 class="text-lg font-medium text-lime-700 mb-2">Phonological Awareness</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Rhyming Games (Identification & Production):** Play "Does it rhyme?" with picture cards (e.g., cat/hat, dog/frog). Provide a word and ask for a rhyming word. Use nursery rhymes and rhyming books.
+                                    <p class="assessment-note">Assessment: Student identifies rhyming words from a pair, or produces a rhyming word for a given CVC word.</p></li>
+                                <li class="intervention-item">**Syllable Clapping/Counting:** Clap out syllables in students' names, common objects, and animals. Segment words into syllables (e.g., 'el-e-phant').
+                                    <p class="assessment-note">Assessment: Student accurately claps and counts syllables in 3-syllable words.</p></li>
+                                <li class="intervention-item">**Initial Sound Identification:** Focus on initial sounds in words using picture sorts (e.g., "Which pictures start with /b/ like 'ball'?"). Use initial sound isolation activities.
+                                    <p class="assessment-note">Assessment: Student identifies the initial sound in CVC words (e.g., /m/ in 'mat').</p></li>
+                                <li class="intervention-item">**Sentence Segmentation:** Say a sentence and have the student clap for each word in the sentence.
+                                    <p class="assessment-note">Assessment: Student claps and counts words in a simple 3-4 word sentence.</p></li>
+                                <li class="intervention-item">**Alliteration Games:** Play games focusing on words that start with the same sound (e.g., "Silly Susie Sings").
+                                    <p class="assessment-note">Assessment: Student identifies words that start with the same sound when given a group of words.</p></li>
+                                <li class="intervention-item">**Compound Word Blending & Segmentation:** Practice putting two words together to make a compound word (e.g., 'sun' + 'flower' = 'sunflower') and breaking them apart.
+                                    <p class="assessment-note">Assessment: Student correctly blends two words to form a compound word, and segments a compound word into its two parts.</p></li>
+                                <li class="intervention-item">**Oral Blending (Onset-Rime):** Provide onset and rime (e.g., /b/ + -at) and have students blend to form the word "bat."
+                                    <p class="assessment-note">Assessment: Student blends 3/4 onset-rime pairs into a word.</p></li>
+                                <li class="intervention-item">**Oral Segmentation (Onset-Rime):** Give a word and have students break it into its onset and rime (e.g., "cat" -> /c/ + -at).
+                                    <p class="assessment-note">Assessment: Student segments 3/4 given CVC words into onset and rime.</p></li>
+                                <li class="intervention-item">**Word Awareness:** Identify words within spoken sentences by pointing to discrete word cards as a sentence is read.
+                                    <p class="assessment-note">Assessment: Student points to each word card as a 3-4 word sentence is read aloud.</p></li>
+                                <li class="intervention-item">**Auditory Discrimination of Sounds:** Listen to pairs of words and identify if they start with the same sound or different sounds.
+                                    <p class="assessment-note">Assessment: Given pairs of words, student indicates "same" or "different" for initial sounds.</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Concepts of Print -->
+                        <div>
+                            <h4 class="text-lg font-medium text-lime-700 mb-2">Concepts of Print</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Book Handling & Orientation:** Model and practice holding a book right side up, turning pages one by one, and identifying the front/back cover and title.
+                                    <p class="assessment-note">Assessment: Student correctly holds a book, opens to the beginning, and turns pages sequentially.</p></li>
+                                <li class="intervention-item">**Print Awareness (Words vs. Letters):** Point to words as you read aloud. Explain that words tell the story and pictures help. Differentiate between letters, words, and sentences.
+                                    <p class="assessment-note">Assessment: Student identifies a single word versus a single letter when pointed to in a book.</p></li>
+                                <li class="intervention-item">**Directionality (Left-to-Right, Top-to-Bottom):** Trace left-to-right reading direction with a finger. Emphasize returning to the left at the end of each line and moving top-to-bottom.
+                                    <p class="assessment-note">Assessment: Student accurately tracks print with a finger as a sentence is read aloud.</p></li>
+                                <li class="intervention-item">**Return Sweep:** Practice moving eyes/finger from the end of one line to the beginning of the next.
+                                    <p class="assessment-note">Assessment: Observer notes student's eye movement/finger tracking accuracy during reading aloud.</p></li>
+                                <li class="intervention-item">**Identifying Parts of a Book:** Explicitly teach and identify the author, illustrator, title, and spine of a book.
+                                    <p class="assessment-note">Assessment: Student points to the author and title on a book cover when prompted.</p></li>
+                                <li class="intervention-item">**Punctuation Awareness:** Introduce and identify periods, question marks, and exclamation points. Explain their function in reading.
+                                    <p class="assessment-note">Assessment: Student points to a period and explains it means "stop" or "end of a thought."</p></li>
+                                <li class="intervention-item">**Matching Spoken Word to Print:** Use large print text and point to each word as it is spoken, having students match spoken words to printed words.
+                                    <p class="assessment-note">Assessment: Student accurately points to each word as a sentence is read aloud by the teacher.</p></li>
+                                <li class="intervention-item">**Tracking Print:** Use a pointer or finger to track the words as a shared reading text is read aloud.
+                                    <p class="assessment-note">Assessment: Teacher observation of accurate print tracking during shared reading.</p></li>
+                                <li class="intervention-item">**First and Last Word in a Sentence:** Identify the first and last word of a sentence in large print.
+                                    <p class="assessment-note">Assessment: Student correctly identifies the first and last word in a simple written sentence.</p></li>
+                                <li class="intervention-item">**Recognizing Repeated Words:** In a familiar text, identify and point to common repeated words (e.g., "the," "a," "is").
+                                    <p class="assessment-note">Assessment: Student can locate and point to a specific high-frequency word repeated in a simple text.</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Alphabet Knowledge -->
+                        <div>
+                            <h4 class="text-lg font-medium text-lime-700 mb-2">Alphabet Knowledge</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Letter Recognition (Uppercase/Lowercase):** Use alphabet puzzles, letter matching games, and tactile letters (e.g., sandpaper letters, playdoh letters). Focus on 2-3 new letters per week, then review.
+                                    <p class="assessment-note">Assessment: Rapid letter naming fluency (e.g., 26 letters in 30 seconds), matching uppercase to lowercase.</p></li>
+                                <li class="intervention-item">**Letter Sounds (Consonants & Short Vowels):** Introduce 2-3 letter sounds per week with corresponding pictures, actions, and songs. Focus on continuous sounds first (e.g., /m/, /s/).
+                                    <p class="assessment-note">Assessment: Rapid letter sound fluency (e.g., 26 sounds in 30 seconds), saying sound for given letter.</p></li>
+                                <li class="intervention-item">**Letter Formation (Tracing & Writing):** Practice forming letters using multi-sensory methods like tracing in sand, shaving cream, or on whiteboards. Introduce correct letter formation strokes.
+                                    <p class="assessment-note">Assessment: Student writes 5-10 target letters correctly with proper formation (observation, rubric).</p></li>
+                                <li class="intervention-item">**Alphabet Sequencing:** Arrange letter cards in alphabetical order. Sing the alphabet song while pointing to letters.
+                                    <p class="assessment-note">Assessment: Student correctly orders 5-7 letter cards in alphabetical sequence.</p></li>
+                                <li class="intervention-item">**Matching Letters to Objects:** Match an alphabet letter to a picture that starts with that letter's sound.
+                                    <p class="assessment-note">Assessment: Student matches 4/5 target letters to corresponding initial sound pictures.</p></li>
+                                <li class="intervention-item">**Identifying Letters in Own Name:** Help students recognize and spell the letters in their own name and family members' names.
+                                    <p class="assessment-note">Assessment: Student correctly identifies all letters in their first name.</p></li>
+                                <li class="intervention-item">**Letter Hunts:** Go on letter hunts in books, environmental print, or a letter chart to find specific letters.
+                                    <p class="assessment-note">Assessment: Student locates and circles 5 instances of a target letter in a short text.</p></li>
+                                <li class="intervention-item">**Capital vs. Lowercase Sorting:** Sort a mixed set of uppercase and lowercase letter cards into two categories.
+                                    <p class="assessment-note">Assessment: Student accurately sorts 10 mixed letter cards into uppercase/lowercase categories.</p></li>
+                                <li class="intervention-item">**Writing First Letter of Name:** Practice writing the first letter of their name accurately.
+                                    <p class="assessment-note">Assessment: Student writes the first letter of their name with correct formation.</p></li>
+                                <li class="intervention-item">**Letter Games (Bingo, Memory):** Play interactive letter games to reinforce recognition and sounds in a fun way.
+                                    <p class="assessment-note">Assessment: Student correctly identifies letters/sounds during game play (e.g., wins a Bingo round by identifying letters).</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kindergarten Section -->
+            <div class="grade-section bg-gray-50 p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold text-gray-700 mb-4 flex items-center justify-between">
+                    Kindergarten
+                    <div class="flex space-x-3">
+                        <button class="toggle-interventions btn-math bg-blue-500 text-white font-semibold py-2 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105" data-grade="k" data-subject="math">
+                            Math
+                        </button>
+                        <button class="toggle-interventions btn-reading bg-lime-500 text-white font-semibold py-2 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105" data-grade="k" data-subject="reading">
+                            Reading
+                        </button>
+                    </div>
+                </h2>
+                <!-- K Math Interventions -->
+                <div id="interventions-k-math" class="intervention-section border-t border-gray-200 mt-4 pt-4">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Kindergarten Math Interventions</h3>
+                    <div class="space-y-4">
+                        <!-- Category: Operations and Algebraic Thinking -->
+                        <div>
+                            <h4 class="text-lg font-medium text-blue-700 mb-2">Operations and Algebraic Thinking</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Composing and Decomposing Numbers to 10 (using Ten-Frames):** Use ten-frames and two-color counters to visually represent and explore different ways to make a number (e.g., 7 can be 5 and 2, or 3 and 4).
+                                    <p class="assessment-note">Assessment: Student correctly shows 2-3 different ways to compose a target number (e.g., 6) using counters on a ten-frame.</p></li>
+                                <li class="intervention-item">**Addition within 5 (Concrete Models):** Use finger counting, unifix cubes, or drawings to model simple addition stories (e.g., "2 apples + 3 apples = ?"). Focus on conceptual understanding.
+                                    <p class="assessment-note">Assessment: Student solves 3/5 addition problems within 5 using manipulatives and states the sum.</p></li>
+                                <li class="intervention-item">**Subtraction within 5 (Take Away):** Use concrete objects to act out "take away" subtraction problems (e.g., "5 cookies, eat 2, how many left?").
+                                    <p class="assessment-note">Assessment: Student solves 3/5 subtraction problems within 5 using concrete objects and states the difference.</p></li>
+                                <li class="intervention-item">**"Add To" and "Take From" Word Problems within 10:** Solve simple word problems using pictures or concrete objects to represent the quantities. Focus on understanding the action.
+                                    <p class="assessment-note">Assessment: Student accurately models and solves 2/3 simple addition/subtraction word problems within 10.</p></li>
+                                <li class="intervention-item">**Making 10 (Number Bonds):** Focus on pairs of numbers that add up to 10 (e.g., 6 and 4, 8 and 2). Use ten-frames or number bonds to visualize.
+                                    <p class="assessment-note">Assessment: Given a number (e.g., 7), student states the missing number to make 10.</p></li>
+                                <li class="intervention-item">**Even and Odd Numbers (Introduction):** Sort groups of objects into pairs to determine if the number is even (all paired) or odd (one left over).
+                                    <p class="assessment-note">Assessment: Student correctly sorts groups of 6-10 objects into even/odd categories.</p></li>
+                                <li class="intervention-item">**Representing Addition/Subtraction with Equations:** Write simple equations (e.g., $2+3=5$) after modeling or solving a problem.
+                                    <p class="assessment-note">Assessment: Student writes a correct addition or subtraction equation for a given simple word problem.</p></li>
+                                <li class="intervention-item">**Comparing Number of Objects (Greater Than, Less Than):** Compare the number of objects in two groups (up to 10) using one-to-one correspondence and phrases like "greater than," "less than," or "equal to."
+                                    <p class="assessment-note">Assessment: Student identifies the group with "greater than" or "less than" objects from two given groups.</p></li>
+                                <li class="intervention-item">**Finding the Missing Part (Part-Part-Whole):** Given a total and one part, use manipulatives to find the missing part (e.g., Total 8, Part 3, What's the other part?).
+                                    <p class="assessment-note">Assessment: Student identifies the missing part in a part-part-whole model (sum up to 10).</p></li>
+                                <li class="intervention-item">**Counting On (from a given number):** Start counting from a number other than 1 (e.g., "Start at 4, count on to 7"). Use a number line or track.
+                                    <p class="assessment-note">Assessment: Student accurately counts on from a given number to a specified target number (e.g., from 5 to 10).</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Numbers and Operations in Base Ten -->
+                        <div>
+                            <h4 class="text-lg font-medium text-blue-700 mb-2">Numbers and Operations in Base Ten</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Counting to 100 by Ones and Tens:** Practice rote counting and counting by tens (10, 20, 30...). Use a 100 chart to identify number patterns.
+                                    <p class="assessment-note">Assessment: Student counts to 100 by ones, counts to 100 by tens (starting at 10).</p></li>
+                                <li class="intervention-item">**Number Identification 1-20:** Practice identifying numbers out of sequence. Play "number scavenger hunt" or "number bingo."
+                                    <p class="assessment-note">Assessment: Student identifies 15/20 numerals when presented randomly.</p></li>
+                                <li class="intervention-item">**Writing Numerals 0-20:** Practice forming numerals 0-20 using playdoh, tracing, writing on whiteboards, and paper. Focus on correct stroke order.
+                                    <p class="assessment-note">Assessment: Student writes 10 specified numerals (0-20) legibly and with correct formation.</p></li>
+                                <li class="intervention-item">**Counting Forward and Backward:** Practice counting forward from any given number up to 20, and backward from 10.
+                                    <p class="assessment-note">Assessment: Student counts forward from 7 to 15, and backward from 10 to 0.</p></li>
+                                <li class="intervention-item">**Understanding Place Value (Tens and Ones Introduction):** Group 10 objects together to form a "ten." Count bundles of tens and individual ones (e.g., 2 tens and 3 ones make 23).
+                                    <p class="assessment-note">Assessment: Given 10-20 objects, student groups them into tens and ones and states the total.</p></li>
+                                <li class="intervention-item">**Comparing Numbers to 100:** Use comparison language ("greater than," "less than," "equal to") with two numbers up to 100. Use a number line or 100 chart for visual support.
+                                    <p class="assessment-note">Assessment: Student accurately compares two given numbers (e.g., 45 vs. 54) using appropriate language.</p></li>
+                                <li class="intervention-item">**Ordering Numbers to 20:** Arrange a set of 3-5 number cards (0-20) in sequential order.
+                                    <p class="assessment-note">Assessment: Student correctly orders 5 shuffled number cards (e.g., 7, 12, 3, 18, 9).</p></li>
+                                <li class="intervention-item">**Identifying Numbers Before/After:** Given a number (e.g., 15), student states the number that comes immediately before or after.
+                                    <p class="assessment-note">Assessment: Student correctly states the number before/after for 5/6 given numbers (up to 20).</p></li>
+                                <li class="intervention-item">**Number Representations (Tally Marks, Fingers, Objects):** Practice showing numbers in multiple ways (e.g., show 5 using fingers, tally marks, drawing dots).
+                                    <p class="assessment-note">Assessment: Given a number (e.g., 7), student represents it using two different methods.</p></li>
+                                <li class="intervention-item">**Skip Counting by 5s to 50:** Practice skip counting by 5s. Relate it to counting nickels.
+                                    <p class="assessment-note">Assessment: Student accurately skip counts by 5s to 50.</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Measurement and Data -->
+                        <div>
+                            <h4 class="text-lg font-medium text-blue-700 mb-2">Measurement and Data</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Direct Comparison of Length, Weight, and Capacity:** Compare objects directly to determine which is "longer/shorter," "heavier/lighter," or "holds more/less."
+                                    <p class="assessment-note">Assessment: Given two objects, student correctly compares them using the target comparative language.</p></li>
+                                <li class="intervention-item">**Classifying Objects and Counting Categories:** Sort objects into categories (e.g., by color, shape, size) and count the number of objects in each category.
+                                    <p class="assessment-note">Assessment: Student sorts a set of mixed objects into at least three categories and accurately counts items in each.</p></li>
+                                <li class="intervention-item">**Using Non-Standard Units to Measure Length:** Measure short objects using non-standard units (e.g., paper clips, unifix cubes) placed end-to-end.
+                                    <p class="assessment-note">Assessment: Student accurately measures a crayon or book using 5-10 unifix cubes and states the measurement.</p></li>
+                                <li class="intervention-item">**Creating Simple Picture Graphs:** Collect data from a class question (e.g., "Favorite Pet") and create a simple picture graph using drawings or stickers.
+                                    <p class="assessment-note">Assessment: Student contributes data to a class graph and answers a simple question like "Which pet has the most votes?".</p></li>
+                                <li class="intervention-item">**Telling Time to the Hour:** Practice identifying the hour hand and minute hand, and telling time to the hour on an analog clock.
+                                    <p class="assessment-note">Assessment: Student states the correct hour for 3-4 analog clock faces showing time to the hour.</p></li>
+                                <li class="intervention-item">**Identifying Coins (Penny, Nickel, Dime):** Recognize and name pennies, nickels, and dimes. State their values.
+                                    <p class="assessment-note">Assessment: Student correctly identifies 3/4 common coins (penny, nickel, dime) and states their value.</p></li>
+                                <li class="intervention-item">**Comparing Temperatures (Hot/Cold):** Discuss differences between hot and cold, and identify appropriate clothing for different temperatures.
+                                    <p class="assessment-note">Assessment: Student correctly identifies whether a picture depicts a "hot" or "cold" setting.</p></li>
+                                <li class="intervention-item">**Sequencing Events (First, Next, Last):** Order events in a story or daily routine using sequence words.
+                                    <p class="assessment-note">Assessment: Student correctly sequences 3-4 picture cards depicting a routine (e.g., getting ready for school).</p></li>
+                                <li class="intervention-item">**Understanding Simple Patterns (AB, ABC):** Students identify the core unit of a pattern and extend it.
+                                    <p class="assessment-note">Assessment: Student extends an ABC pattern using blocks for at least one full cycle.</p></li>
+                                <li class="intervention-item">**Estimating Length:** Practice estimating the length of common classroom objects before measuring with non-standard units.
+                                    <p class="assessment-note">Assessment: Student makes a reasonable estimation (e.g., "about 5 cubes long") for a short object before measuring.</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- K Reading Interventions -->
+                <div id="interventions-k-reading" class="intervention-section border-t border-gray-200 mt-4 pt-4">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Kindergarten Reading Interventions</h3>
+                    <div class="space-y-4">
+                        <!-- Category: Phonological Awareness -->
+                        <div>
+                            <h4 class="text-lg font-medium text-lime-700 mb-2">Phonological Awareness</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Phoneme Blending (CVC words):** Give individual sounds (e.g., /c/-/a/-/t/) and have students blend them to say the word "cat." Use Elkonin boxes with counters to visually represent sounds.
+                                    <p class="assessment-note">Assessment: Student orally blends 8/10 CVC sounds into a word.</p></li>
+                                <li class="intervention-item">**Phoneme Segmentation (CVC words):** Have students break a word into individual sounds (e.g., "dog" -> /d/-/o/-/g/). Use Elkonin boxes or sound boxes.
+                                    <p class="assessment-note">Assessment: Student orally segments 8/10 CVC words into individual phonemes.</p></li>
+                                <li class="intervention-item">**Onset-Rime Blending:** Provide onset and rime (e.g., /b/ + -at) and have students blend to form the word "bat." Practice with common rimes (-at, -ap, -en, -it, -og).
+                                    <p class="assessment-note">Assessment: Student blends 8/10 onset-rime pairs into a word.</p></li>
+                                <li class="intervention-item">**Onset-Rime Segmentation:** Give a word and have students break it into its onset and rime (e.g., "fan" -> /f/ + -an).
+                                    <p class="assessment-note">Assessment: Student segments 8/10 given CVC words into onset and rime.</p></li>
+                                <li class="intervention-item">**Phoneme Addition/Deletion:** Practice adding a sound to a word (e.g., "Add /s/ to 'top' -> 'stop'") or deleting a sound (e.g., "Say 'play' without /p/ -> 'lay'").
+                                    <p class="assessment-note">Assessment: Student correctly performs 3/5 phoneme addition/deletion tasks.</p></li>
+                                <li class="intervention-item">**Discriminating Between Initial, Medial, and Final Sounds:** Identify where a specific sound is heard in a word (beginning, middle, or end).
+                                    <p class="assessment-note">Assessment: Student correctly identifies the position (initial, medial, final) of a given sound in a CVC word.</p></li>
+                                <li class="intervention-item">**Auditory Sorting by Initial Sound:** Sort picture cards into groups based on their beginning sounds.
+                                    <p class="assessment-note">Assessment: Student sorts 8/10 picture cards into correct initial sound categories.</p></li>
+                                <li class="intervention-item">**Rhyme Production:** Given a word, student generates one or more words that rhyme.
+                                    <p class="assessment-note">Assessment: Student produces at least two rhyming words for 3/5 target words.</p></li>
+                                <li class="intervention-item">**Syllable Manipulation:** Remove a syllable from a compound word (e.g., "Say 'cupcake' without 'cup' -> 'cake'").
+                                    <p class="assessment-note">Assessment: Student successfully removes a syllable from 3/4 compound words.</p></li>
+                                <li class="intervention-item">**Sentence Dictation with Word Cards:** Students arrange word cards to form a spoken sentence.
+                                    <p class="assessment-note">Assessment: Student correctly arranges word cards to form a simple 3-5 word sentence.</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Phonics -->
+                        <div>
+                            <h4 class="text-lg font-medium text-lime-700 mb-2">Phonics</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Letter-Sound Correspondence (All Letters):** Use a multi-sensory approach (see, hear, touch) to teach letter sounds. Practice writing letters while saying their sounds. Use alphabet charts and tactile letters.
+                                    <p class="assessment-note">Assessment: Student accurately states the sound for 26/26 uppercase and lowercase letters (letter sound fluency probe).</p></li>
+                                <li class="intervention-item">**CVC Word Reading:** Practice reading short a, e, i, o, u CVC words using decodable readers, word families, and magnetic letters. Focus on blending sounds smoothly.
+                                    <p class="assessment-note">Assessment: Student accurately reads 15/20 CVC words from a list, or 90% accuracy in a decodable text.</p></li>
+                                <li class="intervention-item">**High-Frequency Words (Sight Words):** Introduce 3-5 new high-frequency words per week (e.g., "the," "and," "is," "a") using flashcards, word walls, and sentence building. Aim for instant recognition.
+                                    <p class="assessment-note">Assessment: Student reads 25/30 kindergarten-level high-frequency words instantly (Dolch/Fry list).</p></li>
+                                <li class="intervention-item">**Consonant Digraphs (sh, ch, th, wh):** Explicitly teach the sounds of common consonant digraphs. Practice reading and sorting words containing these patterns.
+                                    <p class="assessment-note">Assessment: Student correctly identifies the sound of each digraph and reads 8/10 words containing them.</p></li>
+                                <li class="intervention-item">**Blends (Initial L, R, S blends):** Introduce initial blends (e.g., bl, gr, st). Practice blending the two sounds smoothly.
+                                    <p class="assessment-note">Assessment: Student reads 8/10 words with initial blends (e.g., 'slip', 'grab').</p></li>
+                                <li class="intervention-item">**Decoding Nonsense Words:** Practice reading nonsense CVC words to ensure students are applying phonetic rules rather than memorization.
+                                    <p class="assessment-note">Assessment: Student reads 5/7 nonsense CVC words with correct sounds.</p></li>
+                                <li class="intervention-item">**Picture-Word Matching:** Match CVC words to corresponding pictures.
+                                    <p class="assessment-note">Assessment: Student accurately matches 8/10 CVC words to pictures.</p></li>
+                                <li class="intervention-item">**Word Family Sorts:** Sort words by their word family (e.g., -at: cat, hat, bat; -en: hen, pen, ten).
+                                    <p class="assessment-note">Assessment: Student correctly sorts 10 words into 2-3 word families.</p></li>
+                                <li class="intervention-item">**Dictation of CVC Words:** Say a CVC word; student writes the word using their letter-sound knowledge.
+                                    <p class="assessment-note">Assessment: Student correctly spells 5/7 dictated CVC words.</p></li>
+                                <li class="intervention-item">**Sentence Reading (Simple Decodable):** Read simple sentences composed primarily of CVC words and high-frequency words.
+                                    <p class="assessment-note">Assessment: Student reads 3/5 simple decodable sentences with 90% accuracy and fluency.</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Reading Comprehension -->
+                        <div>
+                            <h4 class="text-lg font-medium text-lime-700 mb-2">Reading Comprehension</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Retelling Stories (Beginning, Middle, End):** After reading a simple story aloud, ask students to retell the main events in order. Use sequence cards or a simple graphic organizer.
+                                    <p class="assessment-note">Assessment: Student retells a familiar story including at least one event from the beginning, middle, and end.</p></li>
+                                <li class="intervention-item">**Answering Wh-Questions (Who, What, Where):** Ask "who," "what," and "where" questions about read-alouds or short decodable texts.
+                                    <p class="assessment-note">Assessment: Student answers 3/4 'wh' questions accurately after listening to a short story.</p></li>
+                                <li class="intervention-item">**Making Connections (Text-to-Self):** Encourage students to connect story events or characters to their own experiences.
+                                    <p class="assessment-note">Assessment: Student makes a relevant text-to-self connection to a read-aloud story.</p></li>
+                                <li class="intervention-item">**Identifying Main Character & Setting:** After reading, ask students to name the main character(s) and where the story takes place.
+                                    <p class="assessment-note">Assessment: Student correctly identifies the main character and setting from a given simple story.</p></li>
+                                <li class="intervention-item">**Predicting:** Before and during reading, pause and ask students to predict what might happen next.
+                                    <p class="assessment-note">Assessment: Student makes a reasonable prediction based on story clues.</p></li>
+                                <li class="intervention-item">**Visualizing:** After reading a descriptive passage, ask students to close their eyes and describe what they "saw" in their minds.
+                                    <p class="assessment-note">Assessment: Student describes 2-3 visual details from a short descriptive passage.</p></li>
+                                <li class="intervention-item">**Understanding Simple Cause & Effect:** In a simple story, identify a cause and its effect (e.g., "The boy dropped the ball, so it rolled away.").
+                                    <p class="assessment-note">Assessment: Student identifies the cause or effect in a simple picture sequence or sentence.</p></li>
+                                <li class="intervention-item">**Drawing to Show Comprehension:** Have students draw a picture that represents a key event or the main idea of a story.
+                                    <p class="assessment-note">Assessment: Student's drawing accurately reflects a key detail or the main event of the story.</p></li>
+                                <li class="intervention-item">**Picture-Supported Questions:** Use picture books or decodable texts with visual support to ask comprehension questions.
+                                    <p class="assessment-note">Assessment: Student answers 4/5 picture-supported comprehension questions correctly.</p></li>
+                                <li class="intervention-item">**Retelling with Props:** Provide props or puppets for students to use as they retell a story, helping them remember key events and characters.
+                                    <p class="assessment-note">Assessment: Student uses props to sequence and retell a story with 80% accuracy of events.</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1st Grade Section -->
+            <div class="grade-section bg-gray-50 p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold text-gray-700 mb-4 flex items-center justify-between">
+                    1st Grade
+                    <div class="flex space-x-3">
+                        <button class="toggle-interventions btn-math bg-blue-500 text-white font-semibold py-2 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105" data-grade="1st" data-subject="math">
+                            Math
+                        </button>
+                        <button class="toggle-interventions btn-reading bg-lime-500 text-white font-semibold py-2 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105" data-grade="1st" data-subject="reading">
+                            Reading
+                        </button>
+                    </div>
+                </h2>
+                <!-- 1st Grade Math Interventions -->
+                <div id="interventions-1st-math" class="intervention-section border-t border-gray-200 mt-4 pt-4">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">1st Grade Math Interventions</h3>
+                    <div class="space-y-4">
+                        <!-- Category: Operations and Algebraic Thinking -->
+                        <div>
+                            <h4 class="text-lg font-medium text-blue-700 mb-2">Operations and Algebraic Thinking</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Fluency within 20 (Addition & Subtraction):** Daily timed practice with addition and subtraction facts using strategies like counting on, counting back, making ten, doubles, and near doubles. Use flashcards, fact triangles, and online games.
+                                    <p class="assessment-note">Assessment: Timed fluency probe (e.g., 20 facts in 1 minute, aiming for 15+ correct).</p></li>
+                                <li class="intervention-item">**Understanding Relationship between Addition & Subtraction:** Use fact families (e.g., $3+4=7$, $4+3=7$, $7-3=4$, $7-4=3$) to demonstrate inverse operations.
+                                    <p class="assessment-note">Assessment: Given three numbers (e.g., 5, 8, 13), student writes all four related equations.</p></li>
+                                <li class="intervention-item">**Solving Various Word Problem Types within 20:** Focus on "result unknown," "change unknown," and "start unknown" problems. Use concrete models, drawings, and equations to represent and solve problems.
+                                    <p class="assessment-note">Assessment: Student accurately solves 3/4 different types of word problems within 20.</p></li>
+                                <li class="intervention-item">**Adding Three Numbers:** Use number lines or mental math strategies (e.g., making a 10 first) to add three single-digit numbers.
+                                    <p class="assessment-note">Assessment: Student accurately solves 4/5 problems adding three single-digit numbers.</p></li>
+                                <li class="intervention-item">**Using the Equal Sign:** Emphasize that the equal sign means "is the same as" rather than "gives the answer." Solve problems like $7 = 5 + 2$.
+                                    <p class="assessment-note">Assessment: Student correctly completes open equations like $6 + 3 = ? + 5$.</p></li>
+                                <li class="intervention-item">**Modeling with Part-Part-Whole:** Use part-part-whole mats to model addition and subtraction problems, focusing on finding the unknown part or whole.
+                                    <p class="assessment-note">Assessment: Student correctly uses a part-part-whole mat to solve a given addition/subtraction problem.</p></li>
+                                <li class="intervention-item">**Comparing Equations:** Compare two addition or subtraction expressions using $<, >, =$ (e.g., $5+3 \text{ _ } 4+4$).
+                                    <p class="assessment-note">Assessment: Student accurately places the correct comparison symbol for 3/4 equation pairs.</p></li>
+                                <li class="intervention-item">**Number Line Strategies for +/-:** Use an open number line to count on or count back for addition and subtraction within 20.
+                                    <p class="assessment-note">Assessment: Student accurately uses an open number line to solve 3/4 addition or subtraction problems within 20.</p></li>
+                                <li class="intervention-item">**Fact Families to 10:** Reinforce mastery of all addition and subtraction facts within 10 through daily practice.
+                                    <p class="assessment-note">Assessment: Student can orally state all four facts in a fact family for a given set of numbers (e.g., 2, 3, 5).</p></li>
+                                <li class="intervention-item">**Understanding True/False Equations:** Determine if addition/subtraction equations are true or false.
+                                    <p class="assessment-note">Assessment: Student correctly identifies 4/5 true/false equations.</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Numbers and Operations in Base Ten -->
+                        <div>
+                            <h4 class="text-lg font-medium text-blue-700 mb-2">Numbers and Operations in Base Ten</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Understanding Place Value (Tens and Ones):** Use base-ten blocks (longs and units) to model numbers, identify the value of digits, and understand that 10 ones make a ten.
+                                    <p class="assessment-note">Assessment: Given a two-digit number, student builds it with base-ten blocks and identifies the number of tens and ones.</p></li>
+                                <li class="intervention-item">**Adding Two-Digit Numbers (No Regrouping):** Use base-ten blocks or drawings to add two-digit numbers, focusing on combining tens and ones separately.
+                                    <p class="assessment-note">Assessment: Student accurately solves 4/5 two-digit addition problems (no regrouping) using drawings or blocks.</p></li>
+                                <li class="intervention-item">**Subtracting Two-Digit Numbers (No Regrouping):** Use base-ten blocks or drawings to subtract two-digit numbers, modeling "take away" from the tens and ones place.
+                                    <p class="assessment-note">Assessment: Student accurately solves 4/5 two-digit subtraction problems (no regrouping) using drawings or blocks.</p></li>
+                                <li class="intervention-item">**Comparing Two-Digit Numbers:** Use comparison symbols ($<$, $>$, $=$) with two-digit numbers, explaining reasoning based on comparing the tens place first, then the ones place.
+                                    <p class="assessment-note">Assessment: Student correctly places the appropriate comparison symbol between two given two-digit numbers for 5/6 problems.</p></li>
+                                <li class="intervention-item">**Counting to 120:** Practice counting forward from any number up to 120. Use a 120 chart to identify patterns.
+                                    <p class="assessment-note">Assessment: Student counts accurately from 87 to 105.</p></li>
+                                <li class="intervention-item">**Reading and Writing Numbers (up to 120):** Read and write numerals and number words up to 120.
+                                    <p class="assessment-note">Assessment: Student reads 10 random numbers (up to 120) and writes 5 dictated numbers correctly.</p></li>
+                                <li class="intervention-item">**Adding Multiples of 10:** Add a two-digit number and a multiple of 10 (e.g., $34 + 20 = 54$) using a 100 chart or mental math.
+                                    <p class="assessment-note">Assessment: Student solves 4/5 problems adding a multiple of 10 to a two-digit number.</p></li>
+                                <li class="intervention-item">**Subtracting Multiples of 10:** Subtract a multiple of 10 from a two-digit number.
+                                    <p class="assessment-note">Assessment: Student solves 4/5 problems subtracting a multiple of 10 from a two-digit number.</p></li>
+                                <li class="intervention-item">**Finding 10 More/10 Less:** Given a two-digit number, identify the number that is 10 more or 10 less. Use a 100 chart.
+                                    <p class="assessment-note">Assessment: Student states 10 more/10 less for 5/6 given two-digit numbers.</p></li>
+                                <li class="intervention-item">**Using Models to Represent Numbers:** Represent numbers up to 120 using different models (base-ten blocks, tens and ones drawings, expanded form).
+                                    <p class="assessment-note">Assessment: Given a number, student represents it in two different ways (e.g., base-ten blocks and expanded form).</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Measurement and Data -->
+                        <div>
+                            <h4 class="text-lg font-medium text-blue-700 mb-2">Measurement and Data</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Measuring Length with Standard Units (Inches/Centimeters):** Measure objects using a ruler to the nearest whole inch or centimeter. Emphasize starting at zero.
+                                    <p class="assessment-note">Assessment: Student accurately measures 3/4 objects to the nearest inch/cm using a ruler.</p></li>
+                                <li class="intervention-item">**Comparing Lengths of Objects:** Order three objects by length. Explain how measurements help in ordering.
+                                    <p class="assessment-note">Assessment: Student correctly orders three objects (e.g., pencils, crayons) by length.</p></li>
+                                <li class="intervention-item">**Telling Time to the Half-Hour:** Practice identifying the hour and minute hands and telling time to the hour and half-hour on analog and digital clocks.
+                                    <p class="assessment-note">Assessment: Student states the correct time for 5/6 analog clocks showing time to the hour or half-hour.</p></li>
+                                <li class="intervention-item">**Identifying & Counting Coins (up to $1.00):** Identify pennies, nickels, dimes, and quarters. Count mixed coins up to $1.00.
+                                    <p class="assessment-note">Assessment: Student accurately counts a mixed set of coins totaling under $0.50.</p></li>
+                                <li class="intervention-item">**Data Collection and Representation (Tally Charts & Bar Graphs):** Conduct simple surveys, collect data using tally marks, and create simple bar graphs with up to three categories.
+                                    <p class="assessment-note">Assessment: Student creates a tally chart and a simple bar graph from provided data (5-7 data points).</p></li>
+                                <li class="intervention-item">**Interpreting Data from Graphs:** Ask and answer questions about data presented in simple picture and bar graphs (e.g., "Which has the most? How many more?").
+                                    <p class="assessment-note">Assessment: Student answers 3/4 questions correctly about a given bar graph.</p></li>
+                                <li class="intervention-item">**Ordering Events by Time:** Sequence events that happen over time (e.g., events in a day, week, month).
+                                    <p class="assessment-note">Assessment: Student correctly orders 4-5 picture cards representing a sequence of daily activities.</p></li>
+                                <li class="intervention-item">**Understanding Analog vs. Digital Clocks:** Match analog times to digital times.
+                                    <p class="assessment-note">Assessment: Student matches 3/4 analog clocks to their corresponding digital times.</p></li>
+                                <li class="intervention-item">**Problem Solving with Money:** Solve simple word problems involving adding or subtracting money amounts (e.g., "If I have 2 dimes and 3 pennies, how much do I have?").
+                                    <p class="assessment-note">Assessment: Student solves 2/3 simple money word problems involving addition of coins.</p></li>
+                                <li class="intervention-item">**Temperature Reading (Introduction):** Read a simple thermometer to the nearest 10 degrees. Discuss what temperatures mean (hot/cold).
+                                    <p class="assessment-note">Assessment: Student identifies the temperature on a thermometer showing a clear reading (e.g., 70 degrees).</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- 1st Grade Reading Interventions -->
+                <div id="interventions-1st-reading" class="intervention-section border-t border-gray-200 mt-4 pt-4">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">1st Grade Reading Interventions</h3>
+                    <div class="space-y-4">
+                        <!-- Category: Phonics -->
+                        <div>
+                            <h4 class="text-lg font-medium text-lime-700 mb-2">Phonics</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Decoding CVC words:** Reinforce automatic decoding of CVC words across all short vowel sounds. Use word ladders and timed readings of CVC word lists.
+                                    <p class="assessment-note">Assessment: Student reads 25/30 CVC words correctly in 1 minute (word list fluency).</p></li>
+                                <li class="intervention-item">**Consonant Digraphs & Trigraphs (sh, ch, th, wh, tch, dge):** Explicitly teach the sounds and spelling patterns for common digraphs and trigraphs. Practice reading and sorting words containing these patterns.
+                                    <p class="assessment-note">Assessment: Student correctly reads 8/10 words with target digraphs/trigraphs.</p></li>
+                                <li class="intervention-item">**Consonant Blends (L, R, S blends):** Teach the blending of sounds for initial and final consonant blends (e.g., bl, st, gr, nd, mp). Use picture sorts and decodable word lists.
+                                    <p class="assessment-note">Assessment: Student reads 10/12 words containing target initial/final blends.</p></li>
+                                <li class="intervention-item">**Long Vowel Sounds (Silent 'e' rule - VCe):** Teach the "magic e" or "silent e" rule. Practice reading and spelling VCe words (e.g., 'cape', 'kite', 'bone').
+                                    <p class="assessment-note">Assessment: Student reads 8/10 VCe words with correct long vowel sounds.</p></li>
+                                <li class="intervention-item">**Long Vowel Sounds (Vowel Teams):** Introduce common vowel teams for long vowels (e.g., ai, ay, ee, ea, oa, ow). Practice reading words with these patterns.
+                                    <p class="assessment-note">Assessment: Student reads 8/10 words containing taught vowel teams.</p></li>
+                                <li class="intervention-item">**R-Controlled Vowels (ar, or, ir, er, ur):** Explicitly teach the sounds of r-controlled vowels. Use word sorts and decodable texts focusing on these patterns.
+                                    <p class="assessment-note">Assessment: Student reads 8/10 words with r-controlled vowels.</p></li>
+                                <li class="intervention-item">**Decoding Multi-Syllabic Words (Compound Words):** Teach strategy to break down compound words into smaller known words to decode (e.g., 'cupcake' -> 'cup' + 'cake').
+                                    <p class="assessment-note">Assessment: Student correctly decodes 4/5 compound words.</p></li>
+                                <li class="intervention-item">**Fluency with Decodable Texts:** Read decodable texts that primarily use taught phonics patterns and high-frequency words. Focus on accuracy and expression.
+                                    <p class="assessment-note">Assessment: Oral reading fluency probe (e.g., reads 40-60 WCPM with 90% accuracy in a 1st grade decodable text).</p></li>
+                                <li class="intervention-item">**Spelling with Phonics Patterns:** Dictate words that follow taught phonics patterns (CVC, digraphs, blends).
+                                    <p class="assessment-note">Assessment: Student correctly spells 8/10 dictated words following phonics patterns.</p></li>
+                                <li class="intervention-item">**Applying Phonics to Nonsense Words:** Read nonsense words to assess true decoding ability, not just memorization.
+                                    <p class="assessment-note">Assessment: Student reads 7/10 nonsense words with correct phonics application.</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: High-Frequency Words -->
+                        <div>
+                            <h4 class="text-lg font-medium text-lime-700 mb-2">High-Frequency Words</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Rapid Recognition of Grade-Level Sight Words:** Daily review of 1st-grade high-frequency words (e.g., Dolch 1st Grade, Fry 100) using flashcards, word walls, and interactive online games. Aim for instant recognition.
+                                    <p class="assessment-note">Assessment: Timed sight word recognition probe (e.g., reads 40+ words in 1 minute).</p></li>
+                                <li class="intervention-item">**Building Sentences with High-Frequency Words:** Use word cards to construct simple sentences, reinforcing their use in context and promoting understanding of sentence structure.
+                                    <p class="assessment-note">Assessment: Student correctly arranges word cards to form 3-4 grammatically correct sentences using target high-frequency words.</p></li>
+                                <li class="intervention-item">**Writing High-Frequency Words:** Dictate high-frequency words for students to write. Focus on correct spelling without relying on phonetic patterns for irregular words.
+                                    <p class="assessment-note">Assessment: Student correctly spells 8/10 dictated high-frequency words.</p></li>
+                                <li class="intervention-item">**Finding High-Frequency Words in Text:** During shared or guided reading, have students locate and highlight target high-frequency words in a passage.
+                                    <p class="assessment-note">Assessment: Student correctly identifies 10/12 target high-frequency words within a short paragraph.</p></li>
+                                <li class="intervention-item">**High-Frequency Word Games:** Play games like "Sight Word Bingo," "Go Fish" with word cards, or "Roll and Read" to make practice engaging.
+                                    <p class="assessment-note">Assessment: Observation of active participation and correct word identification during game play.</p></li>
+                                <li class="intervention-item">**Read-Aloud with Tracking:** Read a familiar story aloud while student tracks the words with their finger, paying attention to high-frequency words.
+                                    <p class="assessment-note">Assessment: Observation of student accurately tracking print and pointing to target high-frequency words.</p></li>
+                                <li class="intervention-item">**Sentence Fluency with Sight Words:** Practice reading sentences containing multiple high-frequency words smoothly and with expression.
+                                    <p class="assessment-note">Assessment: Student reads 3/4 sentences with 95% accuracy and appropriate pace/expression.</p></li>
+                                <li class="intervention-item">**Personal Sight Word Ring:** Create a personal ring of difficult sight words for daily quick review.
+                                    <p class="assessment-note">Assessment: Student masters 5 new words per week on their personal ring.</p></li>
+                                <li class="intervention-item">**Flashcard Drills:** Use quick, repetitive flashcard drills to build automaticity for target words.
+                                    <p class="assessment-note">Assessment: Student identifies 15 words in 30 seconds from a set of target flashcards.</p></li>
+                                <li class="intervention-item">**Contextual Use:** Encourage students to use high-frequency words in their own writing and conversation.
+                                    <p class="assessment-note">Assessment: Student uses at least 5 target high-frequency words correctly in a short written response.</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Reading Comprehension: Literature -->
+                        <div>
+                            <h4 class="text-lg font-medium text-lime-700 mb-2">Reading Comprehension: Literature</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Identifying Main Character & Setting:** After reading, ask students to name the main character(s) and describe where and when the story takes place using text evidence.
+                                    <p class="assessment-note">Assessment: Student accurately identifies main character(s) and describes setting (place & time) with one supporting detail from the text.</p></li>
+                                <li class="intervention-item">**Sequencing Key Events (Beginning, Middle, End):** Use graphic organizers (e.g., sequence chain, story map) to help students identify and order the main events of a story.
+                                    <p class="assessment-note">Assessment: Student accurately sequences 3-4 key events of a narrative in order.</p></li>
+                                <li class="intervention-item">**Retelling Stories with Key Details:** Guide students to retell stories, including key characters, events, and the problem/solution. Use prompts like "What happened first? Next? Last?"
+                                    <p class="assessment-note">Assessment: Student provides a coherent retelling of a story, including at least 3 key details.</p></li>
+                                <li class="intervention-item">**Understanding Character Feelings and Motivations:** Discuss how characters feel and why they feel that way based on their actions and dialogue in the story.
+                                    <p class="assessment-note">Assessment: Student identifies a character's feeling and provides text evidence for it.</p></li>
+                                <li class="intervention-item">**Making Predictions & Confirming:** Before and during reading, encourage predictions. After reading, discuss whether predictions were confirmed or revised.
+                                    <p class="assessment-note">Assessment: Student makes a logical prediction and identifies if it was supported by the text.</p></li>
+                                <li class="intervention-item">**Connecting Text to Self/Other Texts/World:** Facilitate discussions where students make connections between the story and their own experiences, other stories, or real-world events.
+                                    <p class="assessment-note">Assessment: Student makes a relevant text-to-self or text-to-text connection with explanation.</p></li>
+                                <li class="intervention-item">**Identifying the Central Message/Lesson:** For fables or moral stories, help students identify the lesson or central message.
+                                    <p class="assessment-note">Assessment: Student states the main lesson or moral of a fable/story.</p></li>
+                                <li class="intervention-item">**Asking and Answering Questions about Key Details:** Model asking "who," "what," "where," "when," "why," and "how" questions, and guide students to find answers in the text.
+                                    <p class="assessment-note">Assessment: Student answers 4/5 explicit comprehension questions about a read text.</p></li>
+                                <li class="intervention-item">**Visualizing to Aid Comprehension:** After reading descriptive passages, encourage students to create mental images and share what they "see."
+                                    <p class="assessment-note">Assessment: Student describes 2-3 specific mental images based on a descriptive passage.</p></li>
+                                <li class="intervention-item">**Comparing and Contrasting Characters:** Use a Venn diagram or T-chart to compare and contrast two characters from the same story.
+                                    <p class="assessment-note">Assessment: Student identifies at least one similarity and one difference between two characters.</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Reading Comprehension: Informational Text -->
+                        <div>
+                            <h4 class="text-lg font-medium text-lime-700 mb-2">Reading Comprehension: Informational Text</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Identifying Main Topic and Key Details:** Teach students to find the main topic of a non-fiction text and locate 2-3 key details that support it. Use a main idea web or T-chart.
+                                    <p class="assessment-note">Assessment: Student states the main topic and provides two supporting details from an informational text.</p></li>
+                                <li class="intervention-item">**Using Text Features (Title, Headings, Photos, Captions):** Explicitly teach the purpose of common text features and guide students to use them to understand the text.
+                                    <p class="assessment-note">Assessment: Student identifies 3/4 common text features and explains their purpose in a given text.</p></li>
+                                <li class="intervention-item">**Asking & Answering Questions about Information:** Model how to ask factual questions about non-fiction texts and find answers directly in the text.
+                                    <p class="assessment-note">Assessment: Student accurately answers 4/5 literal questions about an informational text.</p></li>
+                                <li class="intervention-item">**Understanding Cause & Effect in Nonfiction:** Identify simple cause-and-effect relationships in informational passages (e.g., "It rained, so the ground got wet.").
+                                    <p class="assessment-note">Assessment: Student identifies the cause or effect in 2/3 simple informational sentences.</p></li>
+                                <li class="intervention-item">**Vocabulary Acquisition (Content-Specific):** Pre-teach and review key vocabulary words found in informational texts using visuals and simple definitions.
+                                    <p class="assessment-note">Assessment: Student correctly defines 3/5 new content-specific vocabulary words.</p></li>
+                                <li class="intervention-item">**Comparing Two Texts on the Same Topic (Basic):** Read two short informational texts on the same topic and identify one similarity and one difference.
+                                    <p class="assessment-note">Assessment: Student identifies one common fact and one unique fact from two texts about the same animal.</p></li>
+                                <li class="intervention-item">**Identifying Author's Purpose (Inform):** Focus on informational texts and discuss that the author's purpose is to inform or teach.
+                                    <p class="assessment-note">Assessment: Student correctly states the author's purpose (to inform) for a given informational text.</p></li>
+                                <li class="intervention-item">**Using Glossaries/Indexes (Introduction):** Introduce the concepts of a glossary and index and practice using them to find specific information.
+                                    <p class="assessment-note">Assessment: Student successfully uses a simple glossary to find the definition of a target word.</p></li>
+                                <li class="intervention-item">**Summarizing Key Information:** Guide students to briefly summarize the most important facts from a short informational paragraph.
+                                    <p class="assessment-note">Assessment: Student writes a 1-2 sentence summary of a short informational paragraph.</p></li>
+                                <li class="intervention-item">**Graphic Organizers for Information:** Use KWL charts, fact webs, or simple concept maps to organize information from informational texts.
+                                    <p class="assessment-note">Assessment: Student completes a KWL chart for a new topic after reading a short text.</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2nd Grade Section -->
+            <div class="grade-section bg-gray-50 p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold text-gray-700 mb-4 flex items-center justify-between">
+                    2nd Grade
+                    <div class="flex space-x-3">
+                        <button class="toggle-interventions btn-math bg-blue-500 text-white font-semibold py-2 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105" data-grade="2nd" data-subject="math">
+                            Math
+                        </button>
+                        <button class="toggle-interventions btn-reading bg-lime-500 text-white font-semibold py-2 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105" data-grade="2nd" data-subject="reading">
+                            Reading
+                        </button>
+                    </div>
+                </h2>
+                <!-- 2nd Grade Math Interventions -->
+                <div id="interventions-2nd-math" class="intervention-section border-t border-gray-200 mt-4 pt-4">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">2nd Grade Math Interventions</h3>
+                    <div class="space-y-4">
+                        <!-- Category: Numbers and Operations in Base Ten -->
+                        <div>
+                            <h4 class="text-lg font-medium text-blue-700 mb-2">Numbers and Operations in Base Ten</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Adding within 100 with Regrouping:** Use base-ten blocks, open number lines, or expanded form to model and solve addition problems involving regrouping (carrying over tens or hundreds).
+                                    <p class="assessment-note">Assessment: Student accurately solves 4/5 two-digit addition problems with regrouping using a strategy.</p></li>
+                                <li class="intervention-item">**Subtracting within 100 with Regrouping:** Use base-ten blocks, open number lines, or drawings to model and solve subtraction problems involving regrouping ("borrowing" from tens or hundreds).
+                                    <p class="assessment-note">Assessment: Student accurately solves 4/5 two-digit subtraction problems with regrouping using a strategy.</p></li>
+                                <li class="intervention-item">**Understanding Place Value to Hundreds:** Identify the value of each digit in a three-digit number. Read and write numbers to 1000 using base-ten numerals, number names, and expanded form.
+                                    <p class="assessment-note">Assessment: Student correctly identifies the value of a digit in any place (e.g., 5 in 547 is 500), writes numbers in expanded form.</p></li>
+                                <li class="intervention-item">**Fluency with Addition/Subtraction within 20:** Daily quick drills to maintain and improve mental math fluency for facts within 20.
+                                    <p class="assessment-note">Assessment: Timed fluency probes (e.g., 20 addition/subtraction facts in 1 minute, aiming for 18+ correct).</p></li>
+                                <li class="intervention-item">**Skip Counting by 2s, 5s, 10s, 100s:** Practice skip counting starting from any given number. Relate skip counting to repeated addition.
+                                    <p class="assessment-note">Assessment: Student accurately skip counts by 5s from 35 to 85, and by 100s from 200 to 900.</p></li>
+                                <li class="intervention-item">**Comparing Three-Digit Numbers:** Compare two three-digit numbers using $<, >, =$ symbols, explaining reasoning based on place value.
+                                    <p class="assessment-note">Assessment: Student correctly places the appropriate comparison symbol for 5/6 given three-digit numbers.</p></li>
+                                <li class="intervention-item">**Adding up to Four Two-Digit Numbers:** Use strategies like grouping tens and ones, or partial sums, to add multiple two-digit numbers.
+                                    <p class="assessment-note">Assessment: Student accurately solves 2/3 problems involving adding four two-digit numbers.</p></li>
+                                <li class="intervention-item">**Mental Math Strategies for +/- (Tens & Hundreds):** Practice adding/subtracting 10 or 100 to/from a number mentally.
+                                    <p class="assessment-note">Assessment: Student verbally states the answer to "10 more than 47" or "100 less than 350" for 5/6 problems.</p></li>
+                                <li class="intervention-item">**Understanding Number Line for +/- (up to 100):** Use open number lines to solve addition and subtraction problems, including those with regrouping.
+                                    <p class="assessment-note">Assessment: Student demonstrates ability to use an open number line to solve $38 + 25$ or $52 - 17$.</p></li>
+                                <li class="intervention-item">**Identifying Even and Odd Numbers (up to 20):** Extend understanding of even and odd numbers to larger two-digit numbers.
+                                    <p class="assessment-note">Assessment: Student correctly identifies 8/10 given numbers (up to 20) as even or odd.</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Measurement and Data -->
+                        <div>
+                            <h4 class="text-lg font-medium text-blue-700 mb-2">Measurement and Data</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Measuring Length in Standard Units (Inches, Feet, Cm, Meters):** Measure objects using appropriate tools (ruler, yardstick, meter stick) to the nearest inch/cm. Estimate and then measure.
+                                    <p class="assessment-note">Assessment: Student accurately measures 4/5 objects using a ruler to the nearest inch/cm.</p></li>
+                                <li class="intervention-item">**Creating and Interpreting Picture and Bar Graphs:** Collect data, create picture graphs and bar graphs with up to four categories. Ensure correct labeling and scaling.
+                                    <p class="assessment-note">Assessment: Student correctly constructs a bar graph from a given data set and answers 3/4 interpretive questions about it.</p></li>
+                                <li class="intervention-item">**Telling Time to the Nearest 5 Minutes:** Practice telling time to the nearest 5 minutes on analog and digital clocks. Draw hands on a clock for given times.
+                                    <p class="assessment-note">Assessment: Student correctly states the time for 5/6 analog clocks showing time to the nearest 5 minutes.</p></li>
+                                <li class="intervention-item">**Solving Word Problems Involving Money (Dollars & Cents):** Count mixed collections of coins and dollars up to $10.00. Solve simple word problems involving adding and subtracting money.
+                                    <p class="assessment-note">Assessment: Student accurately counts a collection of coins and bills (e.g., $1 bill, 2 quarters, 3 dimes, 4 pennies) and solves a related word problem.</p></li>
+                                <li class="intervention-item">**Solving Word Problems Involving Length:** Solve problems involving adding and subtracting lengths (e.g., "How much longer is object A than object B?").
+                                    <p class="assessment-note">Assessment: Student accurately solves 2/3 word problems involving adding or subtracting lengths.</p></li>
+                                <li class="intervention-item">**Comparing Temperature:** Read a thermometer and compare temperatures (e.g., "Is 40°F warmer or colder than 70°F?").
+                                    <p class="assessment-note">Assessment: Student correctly reads a thermometer to the nearest 10 degrees and compares two temperatures.</p></li>
+                                <li class="intervention-item">**Drawing Line Plots:** Create simple line plots to display measurement data.
+                                    <p class="assessment-note">Assessment: Student creates a line plot to represent a given data set (e.g., lengths of 10 pencils).</p></li>
+                                <li class="intervention-item">**Estimating Lengths:** Practice estimating the length of objects in inches, feet, centimeters, or meters before measuring.
+                                    <p class="assessment-note">Assessment: Student's estimations are within 2 units of the actual measurement for 3/4 objects.</p></li>
+                                <li class="intervention-item">**Understanding AM/PM:** Differentiate between AM and PM in daily routines.
+                                    <p class="assessment-note">Assessment: Student correctly identifies whether an activity occurs in AM or PM.</p></li>
+                                <li class="intervention-item">**Elapsed Time (Introduction):** Use a clock or number line to determine a simple elapsed time (e.g., "If lunch starts at 12:00 and lasts 30 minutes, when does it end?").
+                                    <p class="assessment-note">Assessment: Student solves 2/3 simple elapsed time problems (e.g., within the hour).</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Geometry -->
+                        <div>
+                            <h4 class="text-lg font-medium text-blue-700 mb-2">Geometry</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Identifying & Drawing 2D Shapes (Quadrilaterals, Pentagons, Hexagons):** Recognize and draw shapes with specified attributes (number of sides, angles). Focus on quadrilaterals (rectangles, squares, trapezoids, rhombuses).
+                                    <p class="assessment-note">Assessment: Student draws 3/4 requested shapes (e.g., hexagon, rhombus) with correct number of sides/vertices.</p></li>
+                                <li class="intervention-item">**Recognizing & Drawing 3D Shapes (Faces, Edges, Vertices):** Identify cubes, cones, cylinders, and spheres. Describe their attributes (number of faces, edges, vertices).
+                                    <p class="assessment-note">Assessment: Student identifies 3D shapes from pictures/models and states 2 key attributes for each.</p></li>
+                                <li class="intervention-item">**Partitioning Rectangles into Rows and Columns:** Divide a rectangle into equal rows and columns to determine the total number of squares (e.g., $3 \text{ rows of } 4 = 12 \text{ squares}$). Relate to area concept.
+                                    <p class="assessment-note">Assessment: Student accurately partitions a rectangle into specified rows/columns and counts the total number of squares.</p></li>
+                                <li class="intervention-item">**Partitioning Circles and Rectangles into Equal Shares:** Divide circles and rectangles into two, three, or four equal shares. Describe the shares using words like halves, thirds, fourths.
+                                    <p class="assessment-note">Assessment: Student correctly partitions a shape into halves/thirds/fourths and labels the shares.</p></li>
+                                <li class="intervention-item">**Composing Shapes:** Combine two or more two-dimensional shapes to form a new shape.
+                                    <p class="assessment-note">Assessment: Student uses pattern blocks to create a hexagon using trapezoids and triangles.</p></li>
+                                <li class="intervention-item">**Symmetry (Introduction):** Introduce the concept of symmetry and identify lines of symmetry in simple shapes.
+                                    <p class="assessment-note">Assessment: Student draws a line of symmetry on 2/3 symmetrical shapes.</p></li>
+                                <li class="intervention-item">**Attributes of Shapes:** Focus on defining attributes (e.g., "a triangle has three sides") vs. non-defining attributes (e.g., color).
+                                    <p class="assessment-note">Assessment: Student identifies defining attributes of a given shape (e.g., for a square, "4 equal sides, 4 square corners").</p></li>
+                                <li class="intervention-item">**Understanding Area (Introduction):** Cover a surface with unit squares (e.g., square tiles) to find the area.
+                                    <p class="assessment-note">Assessment: Student correctly counts the number of square units needed to cover a small rectangle.</p></li>
+                                <li class="intervention-item">**Identifying Polygons:** Distinguish between polygons and non-polygons based on straight sides and closed figures.
+                                    <p class="assessment-note">Assessment: Student sorts 5-7 shapes into "polygon" and "not polygon" categories.</p></li>
+                                <li class="intervention-item">**Drawing Shapes on a Grid:** Use grid paper to practice drawing shapes with specific side lengths.
+                                    <p class="assessment-note">Assessment: Student accurately draws a rectangle with specified dimensions on grid paper.</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- 2nd Grade Reading Interventions -->
+                <div id="interventions-2nd-reading" class="intervention-section border-t border-gray-200 mt-4 pt-4">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">2nd Grade Reading Interventions</h3>
+                    <div class="space-y-4">
+                        <!-- Category: Phonics -->
+                        <div>
+                            <h4 class="text-lg font-medium text-lime-700 mb-2">Phonics</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Decoding Multi-Syllabic Words (VCCV, VCV patterns):** Teach strategies for dividing words into syllables (e.g., rabbit, tiger). Practice reading words following common syllable division patterns.
+                                    <p class="assessment-note">Assessment: Student correctly divides and reads 8/10 two-syllable words (e.g., 'basket', 'robot').</p></li>
+                                <li class="intervention-item">**Vowel Teams (Complex Patterns: ou, ow, oi, oy, au, aw):** Explicitly teach the sounds and common spelling patterns for more complex vowel teams. Use word sorts and targeted reading practice.
+                                    <p class="assessment-note">Assessment: Student reads 8/10 words with complex vowel teams (e.g., 'shout', 'coin', 'straw').</p></li>
+                                <li class="intervention-item">**R-Controlled Vowels (ar, or, ir, er, ur):** Reinforce and deepen understanding of r-controlled vowel sounds. Practice reading and spelling words with these patterns.
+                                    <p class="assessment-note">Assessment: Student reads 10/12 words with r-controlled vowels accurately.</p></li>
+                                <li class="intervention-item">**Digraphs and Trigraphs Review/Mastery:** Conduct quick reviews and provide targeted practice for mastery of common consonant digraphs (sh, ch, th, wh) and trigraphs (tch, dge).
+                                    <p class="assessment-note">Assessment: Student reads 15/18 words containing target digraphs/trigraphs in 1 minute.</p></li>
+                                <li class="intervention-item">**Long Vowel Patterns (VCe, Vowel Teams):** Ensure mastery of VCe rule and common long vowel teams. Use word building activities.
+                                    <p class="assessment-note">Assessment: Student reads 15/18 words with long vowel patterns (VCe and vowel teams).</p></li>
+                                <li class="intervention-item">**Inflectional Endings (-s, -es, -ed, -ing):** Teach how inflectional endings change the meaning of words and how to decode words with these endings.
+                                    <p class="assessment-note">Assessment: Student reads 8/10 words with inflectional endings correctly.</p></li>
+                                <li class="intervention-item">**Compound Words:** Practice reading and identifying compound words.
+                                    <p class="assessment-note">Assessment: Student correctly reads 8/10 compound words.</p></li>
+                                <li class="intervention-item">**Homophones (Basic):** Introduce simple homophones (e.g., 'to', 'too', 'two') and explain how context helps determine meaning.
+                                    <p class="assessment-note">Assessment: Student correctly identifies the meaning of a homophone in a given sentence.</p></li>
+                                <li class="intervention-item">**Decoding Words with Suffixes (-ful, -less, -ly):** Introduce basic suffixes and practice decoding words containing them.
+                                    <p class="assessment-note">Assessment: Student reads 6/8 words with common suffixes correctly.</p></li>
+                                <li class="intervention-item">**Reading Fluency with Decodable Texts:** Read 2nd-grade decodable texts with appropriate speed, accuracy, and expression.
+                                    <p class="assessment-note">Assessment: Oral reading fluency probe (e.g., reads 70-90 WCPM with 95% accuracy in a 2nd-grade decodable text).</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Reading Comprehension: Literature -->
+                        <div>
+                            <h4 class="text-lg font-medium text-lime-700 mb-2">Comprehension: Literature</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Identifying Main Idea & Key Details:** Identify the central message or main idea of a story and pinpoint multiple key details that support it. Use graphic organizers like main idea webs or summary frames.
+                                    <p class="assessment-note">Assessment: Student accurately states the main idea and provides 3 supporting details for a literary passage.</p></li>
+                                <li class="intervention-item">**Character Analysis (Response to Events/Challenges):** Describe how characters respond to major events and challenges in a story, using text evidence to support answers. Discuss character motivations.
+                                    <p class="assessment-note">Assessment: Student explains how a character reacted to a problem and why (with text evidence).</p></li>
+                                <li class="intervention-item">**Plot (Problem & Solution):** Identify the problem and solution in a narrative. Discuss how the problem is developed and resolved throughout the story.
+                                    <p class="assessment-note">Assessment: Student identifies the main problem and solution in 3/4 narrative texts.</p></li>
+                                <li class="intervention-item">**Sequencing Events (Chronological Order):** Order events in a story chronologically, using time-order words (e.g., first, next, then, finally).
+                                    <p class="assessment-note">Assessment: Student sequences 5-6 events from a story in correct order using a timeline or flow chart.</p></li>
+                                <li class="intervention-item">**Understanding Author's Purpose (Entertain):** Discuss that authors write stories to entertain readers.
+                                    <p class="assessment-note">Assessment: Student correctly identifies the author's purpose (to entertain) for a narrative text.</p></li>
+                                <li class="intervention-item">**Compare and Contrast Characters/Settings:** Use Venn diagrams or T-charts to compare and contrast two characters or two settings from the same or different stories.
+                                    <p class="assessment-note">Assessment: Student identifies at least two similarities and two differences between two characters in a story.</p></li>
+                                <li class="intervention-item">**Inferring Character Traits:** Make inferences about character traits based on their actions, thoughts, and dialogue.
+                                    <p class="assessment-note">Assessment: Student identifies a character trait (e.g., kind, brave) and provides text evidence.</p></li>
+                                <li class="intervention-item">**Cause and Effect in Stories:** Identify cause and effect relationships in narratives (e.g., "The boy was late, so he missed the bus.").
+                                    <p class="assessment-note">Assessment: Student identifies a cause and its effect for 3/4 events in a story.</p></li>
+                                <li class="intervention-item">**Visualizing to Enhance Comprehension:** Guide students to create mental images while reading to better understand the story's setting and events.
+                                    <p class="assessment-note">Assessment: Student draws or describes a mental image after listening to/reading a descriptive passage.</p></li>
+                                <li class="intervention-item">**Retelling with Specific Details:** Provide sentence starters or frames to help students include more specific details in their story retells.
+                                    <p class="assessment-note">Assessment: Student retells a story including 5-7 key details and accurate sequencing.</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Reading Comprehension: Informational Text -->
+                        <div>
+                            <h4 class="text-lg font-medium text-lime-700 mb-2">Comprehension: Informational Text</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Using Text Features (Captions, Headings, Bold Print, Index, Glossary):** Explicitly teach the purpose of various text features. Practice using them to locate specific information and understand topics.
+                                    <p class="assessment-note">Assessment: Student uses 3/4 specified text features (e.g., caption, heading) to answer a question about the text.</p></li>
+                                <li class="intervention-item">**Identifying Main Topic and Supporting Details:** Determine the main topic of a paragraph or section and identify 3-4 key details that support it. Use graphic organizers (e.g., central idea and details).
+                                    <p class="assessment-note">Assessment: Student writes the main topic and three supporting facts for an informational paragraph.</p></li>
+                                <li class="intervention-item">**Asking and Answering Questions (Who, What, Where, When, Why, How):** Model higher-level 'wh' questions and guide students to find answers explicitly stated or implied in the text.
+                                    <p class="assessment-note">Assessment: Student answers 4/5 'wh' questions accurately about a short informational text.</p></li>
+                                <li class="intervention-item">**Understanding Cause & Effect Relationships:** Identify cause-and-effect relationships in informational texts. Use signal words (because, so, since, as a result).
+                                    <p class="assessment-note">Assessment: Student identifies cause and effect for 3/4 events described in informational text.</p></li>
+                                <li class="intervention-item">**Compare and Contrast Information:** Compare and contrast two pieces of information from the same text or from two different texts on a related topic.
+                                    <p class="assessment-note">Assessment: Student identifies 2 similarities and 2 differences between two animals described in an informational text.</p></li>
+                                <li class="intervention-item">**Summarizing Key Information:** Guide students to briefly summarize the most important facts from a short informational passage using a summary frame (e.g., "This text was about... It told me...").
+                                    <p class="assessment-note">Assessment: Student writes a 2-3 sentence summary of an informational passage.</p></li>
+                                <li class="intervention-item">**Author's Purpose (Inform/Explain):** Reinforce the concept that informational texts are written to inform or explain.
+                                    <p class="assessment-note">Assessment: Student correctly identifies the author's purpose for 3/4 given informational texts.</p></li>
+                                <li class="intervention-item">**Using Glossaries and Indexes:** Practice using glossaries to define new words and indexes to locate specific topics within a book.
+                                    <p class="assessment-note">Assessment: Student finds definitions for 3 given words in a glossary and finds a topic in an index.</p></li>
+                                <li class="intervention-item">**Drawing Inferences from Informational Text:** Make simple inferences based on details provided in the text (e.g., "The animal has sharp teeth and claws, so it is probably a predator.").
+                                    <p class="assessment-note">Assessment: Student makes a logical inference and supports it with one detail from the text.</p></li>
+                                <li class="intervention-item">**Reading Diagrams and Charts:** Interpret information presented in simple diagrams, charts, and graphs within informational texts.
+                                    <p class="assessment-note">Assessment: Student answers 2/3 questions based on a simple diagram or chart from the text.</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Vocabulary -->
+                        <div>
+                            <h4 class="text-lg font-medium text-lime-700 mb-2">Vocabulary</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Using Context Clues (Definition, Example, Synonym/Antonym):** Explicitly teach different types of context clues. Practice using surrounding words and sentences to determine the meaning of unknown words.
+                                    <p class="assessment-note">Assessment: Student correctly defines 3/4 unknown words using context clues in sentences.</p></li>
+                                <li class="intervention-item">**Prefixes & Suffixes (un-, re-, pre-, -ing, -ed, -ful):** Introduce common prefixes (un-, re-, pre-, dis-) and suffixes (-ing, -ed, -ful, -less, -ly). Explain how they change word meaning.
+                                    <p class="assessment-note">Assessment: Student identifies the meaning of 5/6 words with taught prefixes/suffixes.</p></li>
+                                <li class="intervention-item">**Homographs (words with same spelling, different meaning):** Discuss words that look alike but have different meanings depending on context (e.g., 'bat' animal vs. 'bat' baseball).
+                                    <p class="assessment-note">Assessment: Student provides two different meanings for 3/4 homographs and uses them in sentences.</p></li>
+                                <li class="intervention-item">**Synonyms & Antonyms:** Identify pairs of synonyms and antonyms. Use word sorts or matching games.
+                                    <p class="assessment-note">Assessment: Student correctly identifies synonyms/antonyms for 4/5 target words.</p></li>
+                                <li class="intervention-item">**Tier 2 Vocabulary Acquisition:** Pre-teach and review academic vocabulary that appears across multiple content areas (e.g., 'observe,' 'compare,' 'analyze').
+                                    <p class="assessment-note">Assessment: Student correctly defines and uses 3/5 Tier 2 vocabulary words in a sentence.</p></li>
+                                <li class="intervention-item">**Using a Dictionary (Introduction):):** Introduce the concept of a dictionary and practice finding simple words.
+                                    <p class="assessment-note">Assessment: Student successfully locates 3/4 given words in a simple dictionary/glossary.</p></li>
+                                <li class="intervention-item">**Word Relationships (Categories):** Sort words into categories (e.g., "types of transportation," "farm animals").
+                                    <p class="assessment-note">Assessment: Student correctly sorts 8/10 words into provided categories.</p></li>
+                                <li class="intervention-item">**Vocabulary Journals/Word Walls:** Create a personal vocabulary journal or maintain a classroom word wall for new and important words.
+                                    <p class="assessment-note">Assessment: Student contributes at least 2 new words to the word wall with a definition/picture per week.</p></li>
+                                <li class="intervention-item">**Using New Vocabulary in Speaking/Writing:** Encourage students to use newly learned vocabulary words in their discussions and written responses.
+                                    <p class="assessment-note">Assessment: Student uses 3/4 target vocabulary words appropriately in a short paragraph or conversation.</p></li>
+                                <li class="intervention-item">**Word Families (Vowel Sounds):** Review and extend understanding of word families based on vowel sounds (e.g., -ake, -ine, -oat).
+                                    <p class="assessment-note">Assessment: Student generates 3 new words for 2 given vowel team word families (e.g., 'boat', 'coat', 'float' for -oat).</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3rd Grade Section -->
+            <div class="grade-section bg-gray-50 p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold text-gray-700 mb-4 flex items-center justify-between">
+                    3rd Grade
+                    <div class="flex space-x-3">
+                        <button class="toggle-interventions btn-math bg-blue-500 text-white font-semibold py-2 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105" data-grade="3rd" data-subject="math">
+                            Math
+                        </button>
+                        <button class="toggle-interventions btn-reading bg-lime-500 text-white font-semibold py-2 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105" data-grade="3rd" data-subject="reading">
+                            Reading
+                        </button>
+                    </div>
+                </h2>
+                <!-- 3rd Grade Math Interventions -->
+                <div id="interventions-3rd-math" class="intervention-section border-t border-gray-200 mt-4 pt-4">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">3rd Grade Math Interventions</h3>
+                    <div class="space-y-4">
+                        <!-- Category: Operations and Algebraic Thinking -->
+                        <div>
+                            <h4 class="text-lg font-medium text-blue-700 mb-2">Operations and Algebraic Thinking</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Fluency with Multiplication & Division within 100:** Daily timed practice with multiplication and division facts up to $10 \times 10$. Use strategies like skip counting, repeated addition/subtraction, arrays, equal groups, and fact families.
+                                    <p class="assessment-note">Assessment: Timed fluency probe (e.g., 25 multiplication facts in 1 minute, aiming for 20+ correct).</p></li>
+                                <li class="intervention-item">**Solving Two-Step Word Problems:** Break down multi-step word problems into smaller, manageable parts. Identify the operations needed (addition, subtraction, multiplication, division). Draw models (bar models, strip diagrams) to represent the problem.
+                                    <p class="assessment-note">Assessment: Student accurately solves 3/4 two-step word problems, showing steps and calculations.</p></li>
+                                <li class="intervention-item">**Properties of Operations (Commutative, Associative, Distributive):** Understand and apply properties of operations to simplify and solve multiplication and division problems.
+                                    <p class="assessment-note">Assessment: Student uses a property (e.g., distributive property for $6 \times 7$) to solve a multiplication problem and explains their method.</p></li>
+                                <li class="intervention-item">**Understanding the Relationship between Multiplication & Division:** Use fact families to demonstrate inverse operations (e.g., $3 \times 4 = 12$, $4 \times 3 = 12$, $12 \div 3 = 4$, $12 \div 4 = 3$).
+                                    <p class="assessment-note">Assessment: Given three numbers (e.g., 5, 6, 30), student writes all four related multiplication and division equations.</p></li>
+                                <li class="intervention-item">**Representing Multiplication/Division with Arrays & Equal Groups:** Model multiplication using arrays (rows and columns) and equal groups. Model division using sharing or grouping.
+                                    <p class="assessment-note">Assessment: Student draws an array to represent $4 \times 5$ and explains it, or draws groups for $15 \div 3$.</p></li>
+                                <li class="intervention-item">**Identifying Arithmetic Patterns:** Recognize and extend arithmetic patterns, explaining the rule using addition, subtraction, multiplication, or division.
+                                    <p class="assessment-note">Assessment: Given a number pattern (e.g., 3, 6, 9, 12...), student identifies the rule and extends the pattern by 2-3 terms.</p></li>
+                                <li class="intervention-item">**Solving for Unknowns in Equations:** Find the unknown whole number in multiplication or division equations (e.g., $8 \times ? = 48$).
+                                    <p class="assessment-note">Assessment: Student accurately solves for the unknown in 4/5 multiplication/division equations.</p></li>
+                                <li class="intervention-item">**Rounding Whole Numbers to Nearest 10 or 100:** Round numbers to the nearest 10 or 100. Use a number line for visual support.
+                                    <p class="assessment-note">Assessment: Student correctly rounds 5/6 numbers to the nearest 10 or 100.</p></li>
+                                <li class="intervention-item">**Estimating Sums/Differences:** Estimate sums and differences by rounding numbers to the nearest 10 or 100 before adding/subtracting.
+                                    <p class="assessment-note">Assessment: Student provides a reasonable estimate for a given addition or subtraction problem.</p></li>
+                                <li class="intervention-item">**Solving Problems with Even/Odd Numbers:** Apply understanding of even and odd numbers to solve problems involving groups or arrays.
+                                    <p class="assessment-note">Assessment: Student explains whether the sum of two even numbers is even or odd, and provides an example.</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Fractions -->
+                        <div>
+                            <h4 class="text-lg font-medium text-blue-700 mb-2">Fractions</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Understanding Fractions as Numbers on a Number Line:** Represent unit fractions and non-unit fractions on a number line by partitioning intervals.
+                                    <p class="assessment-note">Assessment: Student accurately plots $1/2$, $1/4$, and $3/4$ on a number line.</p></li>
+                                <li class="intervention-item">**Comparing Equivalent Fractions:** Use visual models (fraction strips, fraction circles, number lines) to identify and generate simple equivalent fractions (e.g., $1/2 = 2/4 = 4/8$).
+                                    <p class="assessment-note">Assessment: Student identifies 2-3 equivalent fractions for a given fraction using visual models.</p></li>
+                                <li class="intervention-item">**Comparing Fractions with Same Numerator or Denominator:** Compare two fractions with the same numerator or same denominator using visual models and reasoning about their size (e.g., $3/4 > 3/8$).
+                                    <p class="assessment-note">Assessment: Student correctly compares 4/5 pairs of fractions with like numerators or denominators.</p></li>
+                                <li class="intervention-item">**Understanding Unit Fractions:** Identify and represent unit fractions (e.g., $1/2$, $1/3$, $1/4$). Understand that a unit fraction is one part of a whole.
+                                    <p class="assessment-note">Assessment: Student accurately shades a unit fraction (e.g., $1/4$) on a visual model.</p></li>
+                                <li class="intervention-item">**Representing Fractions on a Whole:** Model fractions ($1/2, 1/3, 1/4, 1/6, 1/8$) using visual fraction models (e.g., fraction strips, circles, area models). Understand numerator and denominator.
+                                    <p class="assessment-note">Assessment: Student accurately shades a given fraction (e.g., $3/5$) on a circle or rectangle model.</p></li>
+                                <li class="intervention-item">**Fractions as Part of a Set:** Represent and identify fractions as part of a collection of objects (e.g., $2/5$ of the 10 marbles are red).
+                                    <p class="assessment-note">Assessment: Given a set of objects (e.g., 6 blue, 4 red), student states the fraction of red objects.</p></li>
+                                <li class="intervention-item">**Expressing Whole Numbers as Fractions:** Understand that whole numbers can be expressed as fractions (e.g., $3 = 3/1$).
+                                    <p class="assessment-note">Assessment: Student correctly writes 3 as a fraction with a denominator of 1.</p></li>
+                                <li class="intervention-item">**Fraction Word Problems:** Solve simple word problems involving fractions, using visual fraction models.
+                                    <p class="assessment-note">Assessment: Student solves 2/3 simple fraction word problems using a drawing or fraction model.</p></li>
+                                <li class="intervention-item">**Identifying Fractions Greater Than 1:** Use models to show fractions greater than one (e.g., $5/4$).
+                                    <p class="assessment-note">Assessment: Student correctly identifies a visual model that represents a fraction greater than one.</p></li>
+                                <li class="intervention-item">**Using Benchmark Fractions (e.g., 1/2):** Compare fractions to benchmark fractions like $1/2$ to determine if they are greater than, less than, or equal to $1/2$.
+                                    <p class="assessment-note">Assessment: Student correctly states whether $3/8$ is greater or less than $1/2$ and explains why using a model.</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Measurement and Data -->
+                        <div>
+                            <h4 class="text-lg font-medium text-blue-700 mb-2">Measurement and Data</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Area of Rectangles (Tiling & Multiplication):** Calculate the area of rectangles by tiling with unit squares and by multiplying side lengths.
+                                    <p class="assessment-note">Assessment: Student finds the area of a $3 \times 4$ rectangle by drawing squares and counting, then by multiplying.</p></li>
+                                <li class="intervention-item">**Perimeter of Polygons:** Find the perimeter of polygons by adding the lengths of all sides. Solve real-world problems involving perimeter.
+                                    <p class="assessment-note">Assessment: Student calculates the perimeter of a given irregular polygon with 4-6 sides.</p></li>
+                                <li class="intervention-item">**Elapsed Time (to the Minute):** Solve word problems involving addition and subtraction of time intervals in minutes. Use number lines or T-charts to track time.
+                                    <p class="assessment-note">Assessment: Student accurately solves 2/3 elapsed time word problems (e.g., from 9:15 AM to 10:40 AM).</p></li>
+                                <li class="intervention-item">**Measuring Length to Nearest Half/Quarter Inch:** Use a ruler to measure objects to the nearest half or quarter inch.
+                                    <p class="assessment-note">Assessment: Student accurately measures 3/4 objects to the nearest half or quarter inch.</p></li>
+                                <li class="intervention-item">**Mass and Liquid Volume (Grams, Kilograms, Liters, Milliliters):** Measure and estimate liquid volumes and masses of objects using standard units. Solve one-step word problems involving these measurements.
+                                    <p class="assessment-note">Assessment: Student estimates and then measures the mass of an object in grams or kilograms, or liquid volume in liters.</p></li>
+                                <li class="intervention-item">**Creating and Interpreting Bar Graphs and Pictographs (Scaled Axes):** Draw scaled bar graphs and pictographs where each unit on the axis or each picture represents more than one.
+                                    <p class="assessment-note">Assessment: Student accurately creates a bar graph with a scale of 2 or 5, and answers 3 questions about it.</p></li>
+                                <li class="intervention-item">**Line Plots with Whole Numbers:** Generate measurement data by measuring lengths and display data on a line plot with a horizontal scale marked in whole numbers.
+                                    <p class="assessment-note">Assessment: Student creates a line plot from given data and answers a question about the data points.</p></li>
+                                <li class="intervention-item">**Solving Money Word Problems:** Solve one- and two-step word problems involving money (dollars, quarters, dimes, nickels, and pennies), using appropriate symbols.
+                                    <p class="assessment-note">Assessment: Student solves 2/3 two-step money word problems (e.g., finding change from $5.00).</p></li>
+                                <li class="intervention-item">**Understanding Area vs. Perimeter:** Differentiate between area and perimeter and when to use each measurement.
+                                    <p class="assessment-note">Assessment: Given a real-world scenario, student identifies whether to calculate area or perimeter.</p></li>
+                                <li class="intervention-item">**Recognizing Categories of Shapes by Attributes:** Group shapes based on common attributes (e.g., all quadrilaterals, all shapes with right angles).
+                                    <p class="assessment-note">Assessment: Student correctly sorts 6-8 shapes into categories based on a specific geometric attribute.</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- 3rd Grade Reading Interventions -->
+                <div id="interventions-3rd-reading" class="intervention-section border-t border-gray-200 mt-4 pt-4">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">3rd Grade Reading Interventions</h3>
+                    <div class="space-y-4">
+                        <!-- Category: Vocabulary -->
+                        <div>
+                            <h4 class="text-lg font-medium text-lime-700 mb-2">Vocabulary</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Using Context Clues (Definition, Example, Inference, Synonym/Antonym):** Explicitly teach and practice identifying various types of context clues. Model how to infer meaning when no direct clue is present.
+                                    <p class="assessment-note">Assessment: Student accurately defines 4/5 unknown words using context clues within sentences or paragraphs.</p></li>
+                                <li class="intervention-item">**Understanding Prefixes & Suffixes (de-, un-, re-, pre-, -less, -able, -ful, -ly):** Introduce and review a wider range of common prefixes and suffixes. Discuss how they change the root word's meaning. Create a morphology word wall.
+                                    <p class="assessment-note">Assessment: Student identifies the meaning of 8/10 words containing taught prefixes/suffixes.</p></li>
+                                <li class="intervention-item">**Multiple-Meaning Words:** Discuss words with multiple meanings (homonyms) and how context helps determine the correct meaning (e.g., 'crane', 'bank', 'light').
+                                    <p class="assessment-note">Assessment: Student provides two different meanings for 3/4 homonyms and uses them in contextually appropriate sentences.</p></li>
+                                <li class="intervention-item">**Academic Vocabulary Acquisition (Tier 2 Words):** Pre-teach and review academic vocabulary crucial for comprehending grade-level texts across subjects. Use Frayer models (definition, characteristics, examples, non-examples).
+                                    <p class="assessment-note">Assessment: Student correctly defines and uses 4/5 Tier 2 vocabulary words (e.g., 'analyze', 'compare', 'illustrate') in a sentence.</p></li>
+                                <li class="intervention-item">**Root Words:** Introduce the concept of root words and how affixes attach to them. Identify common English and Latin roots.
+                                    <p class="assessment-note">Assessment: Given a word like 'unbelievable', student identifies the root word and its meaning.</p></li>
+                                <li class="intervention-item">**Using a Glossary and Dictionary:** Practice using print and digital glossaries and dictionaries to find definitions, pronunciations, and parts of speech.
+                                    <p class="assessment-note">Assessment: Student quickly finds 3/4 target words and their definitions in a grade-level dictionary.</p></li>
+                                <li class="intervention-item">**Synonyms and Antonyms:** Practice identifying and generating synonyms and antonyms for target words.
+                                    <p class="assessment-note">Assessment: Student provides at least two synonyms and two antonyms for 3/4 common adjectives/verbs.</p></li>
+                                <li class="intervention-item">**Figurative Language (Simile, Metaphor, Alliteration, Onomatopoeia):** Introduce common types of figurative language and discuss their meaning in context.
+                                    <p class="assessment-note">Assessment: Student identifies 3/4 instances of simile or metaphor in a given text and explains its meaning.</p></li>
+                                <li class="intervention-item">**Connotative vs. Denotative Meaning:** Briefly introduce that words can have positive or negative connotations beyond their literal definition.
+                                    <p class="assessment-note">Assessment: Given a pair of words (e.g., 'thin' vs. 'skinny'), student identifies which has a more positive/negative connotation.</p></li>
+                                <li class="intervention-item">**Word Analogies (Basic):** Practice completing simple word analogies (e.g., "Hot is to cold as big is to ___").
+                                    <p class="assessment-note">Assessment: Student correctly completes 3/4 basic word analogies.</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Reading Comprehension: Informational Text -->
+                        <div>
+                            <h4 class="text-lg font-medium text-lime-700 mb-2">Comprehension: Informational Text</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Identifying Main Idea and Supporting Details:** Teach strategies to identify the main idea of a paragraph, section, or entire text. Students must provide specific details from the text to support the main idea. Use summary organizers.
+                                    <p class="assessment-note">Assessment: Student accurately states the main idea and provides 4-5 supporting details from a 2-paragraph informational text.</p></li>
+                                <li class="intervention-item">**Using Text Features (Headings, Subheadings, Captions, Diagrams, Graphs, Glossary, Index):** Analyze how various text features contribute to understanding the main idea and locating information efficiently.
+                                    <p class="assessment-note">Assessment: Student uses 3 different text features (e.g., heading, diagram, glossary) to answer questions about a text.</p></li>
+                                <li class="intervention-item">**Nonfiction Text Structures (Description, Sequence, Cause/Effect, Compare/Contrast, Problem/Solution)::** Introduce the five main text structures. Practice identifying them in texts and using graphic organizers specific to each structure.
+                                    <p class="assessment-note">Assessment: Student identifies the text structure of 3/4 short informational passages and explains why.</p></li>
+                                <li class="intervention-item">**Asking & Answering Questions (Text-Based Evidence):** Model how to formulate questions about informational texts. Guide students to find and cite explicit and implicit answers using text-based evidence.
+                                    <p class="assessment-note">Assessment: Student answers 4/5 inferential comprehension questions, citing specific text evidence for each.</p></li>
+                                <li class="intervention-item">**Summarizing Key Information (Using Main Idea & Details):** Guide students to write concise summaries of informational passages by pulling out the main idea and key supporting details, excluding minor details.
+                                    <p class="assessment-note">Assessment: Student writes a 3-4 sentence summary of a 1-page informational text, accurately reflecting its main points.</p></li>
+                                <li class="intervention-item">**Drawing Inferences:** Practice making inferences based on information presented in the text and prior knowledge. Use "What do you know + What the text says = What you infer" strategy.
+                                    <p class="assessment-note">Assessment: Student makes 3/4 logical inferences from informational texts and cites supporting textual clues.</p></li>
+                                <li class="intervention-item">**Distinguishing Fact from Opinion:** Teach students to differentiate between facts (provable statements) and opinions (beliefs or feelings).
+                                    <p class="assessment-note">Assessment: Student correctly identifies 4/5 sentences as fact or opinion.</p></li>
+                                <li class="intervention-item">**Understanding Technical Language:** Break down and define technical or scientific words specific to the content area using context clues or a glossary.
+                                    <p class="assessment-note">Assessment: Student defines 3/4 technical terms from a science passage with 80% accuracy.</p></li>
+                                <li class="intervention-item">**Synthesizing Information from Multiple Sources (Introduction):** Begin with two very short texts on the same topic; guide students to identify common information and unique information from each.
+                                    <p class="assessment-note">Assessment: Given two short texts on one topic, student identifies one fact common to both and one unique fact from each.</p></li>
+                                <li class="intervention-item">**Determining Author's Purpose & Point of View:** Analyze why an author wrote a particular informational text and identify their potential point of view (e.g., to inform, to persuade).
+                                    <p class="assessment-note">Assessment: Student identifies the author's purpose and can explain a potential bias or viewpoint if present.</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Reading Comprehension: Literature -->
+                        <div>
+                            <h4 class="text-lg font-medium text-lime-700 mb-2">Comprehension: Literature</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Summarizing Literary Texts (Somebody-Wanted-But-So-Then):** Teach and apply the "Somebody-Wanted-But-So-Then" strategy to summarize narratives effectively, focusing on key plot points.
+                                    <p class="assessment-note">Assessment: Student produces a 5-sentence "SWBST" summary of a narrative with 90% accuracy of details.</p></li>
+                                <li class="intervention-item">**Character Traits & Motives:** Analyze characters' traits based on their actions, thoughts, and dialogue. Discuss their motivations and how their actions drive the plot.
+                                    <p class="assessment-note">Assessment: Student identifies 2-3 character traits for a main character and provides textual evidence for each.</p></li>
+                                <li class="intervention-item">**Identifying Theme/Central Message:** Guide students to identify the theme or central message of a story and explain how it is conveyed through key details and events.
+                                    <p class="assessment-note">Assessment: Student states the theme of a story and explains how two events/character actions illustrate it.</p></li>
+                                <li class="intervention-item">**Understanding Plot Development (Problem, Rising Action, Climax, Falling Action, Resolution):** Introduce basic plot elements. Use story maps to trace the development of the conflict and its resolution.
+                                    <p class="assessment-note">Assessment: Student accurately labels a story map with the main problem, climax, and resolution.</p></li>
+                                <li class="intervention-item">**Analyzing Figurative Language:** Interpret the meaning of common figurative language (similes, metaphors, hyperbole, personification) within the context of the story.
+                                    <p class="assessment-note">Assessment: Student identifies 3/4 instances of figurative language and explains their non-literal meaning.</p></li>
+                                <li class="intervention-item">**Making Inferences from Literary Text:** Practice making inferences about characters' feelings, motivations, or unspoken events based on textual clues and prior knowledge.
+                                    <p class="assessment-note">Assessment: Student makes 3/4 valid inferences about a character or event and cites relevant text evidence.</p></li>
+                                <li class="intervention-item">**Comparing and Contrasting Stories/Characters/Settings:** Use Venn diagrams or comparative matrices to compare and contrast elements across two different stories or within the same story.
+                                    <p class="assessment-note">Assessment: Student identifies 2 similarities and 2 differences when comparing two folktales from different cultures.</p></li>
+                                <li class="intervention-item">**Understanding Point of View:** Identify who is telling the story and how their perspective might influence the events told. Introduce first-person and third-person POV.
+                                    <p class="assessment-note">Assessment: Student identifies the narrator's point of view (e.g., "first-person") and explains how it affects the story.</p></li>
+                                <li class="intervention-item">**Visualizing to Deepen Comprehension:** Guide students to create vivid mental images based on descriptive language in a story, then share or draw their visualizations.
+                                    <p class="assessment-note">Assessment: Student draws a detailed picture reflecting a descriptive paragraph from the story.</p></li>
+                                <li class="intervention-item">**Asking and Answering Text-Dependent Questions:** Model how to ask and answer questions that require students to go back to the text to find evidence.
+                                    <p class="assessment-note">Assessment: Student answers 4/5 multi-level questions (literal and inferential) about a literary text, providing textual support.</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4th Grade Section -->
+            <div class="grade-section bg-gray-50 p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-bold text-gray-700 mb-4 flex items-center justify-between">
+                    4th Grade
+                    <div class="flex space-x-3">
+                        <button class="toggle-interventions btn-math bg-blue-500 text-white font-semibold py-2 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105" data-grade="4th" data-subject="math">
+                            Math
+                        </button>
+                        <button class="toggle-interventions btn-reading bg-lime-500 text-white font-semibold py-2 px-6 rounded-full shadow-md transition duration-300 ease-in-out transform hover:scale-105" data-grade="4th" data-subject="reading">
+                            Reading
+                        </button>
+                    </div>
+                </h2>
+                <!-- 4th Grade Math Interventions -->
+                <div id="interventions-4th-math" class="intervention-section border-t border-gray-200 mt-4 pt-4">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">4th Grade Math Interventions</h3>
+                    <div class="space-y-4">
+                        <!-- Category: Numbers and Operations in Base Ten -->
+                        <div>
+                            <h4 class="text-lg font-medium text-blue-700 mb-2">Numbers and Operations in Base Ten</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Multi-Digit Multiplication (2-digit by 2-digit, 3-digit by 1-digit):** Teach and reinforce strategies such as partial products, area models, and the standard algorithm. Focus on understanding place value during multiplication.
+                                    <p class="assessment-note">Assessment: Student accurately solves 4/5 multiplication problems (e.g., $45 \times 23$, $328 \times 7$) using standard algorithm.</p></li>
+                                <li class="intervention-item">**Division (2-digit/3-digit by 1-digit with remainders):** Use arrays, area models, and partial quotients to solve division problems, emphasizing understanding of remainders and how to interpret them.
+                                    <p class="assessment-note">Assessment: Student accurately solves 4/5 division problems (e.g., $78 \div 4$, $245 \div 6$) and correctly states the remainder.</p></li>
+                                <li class="intervention-item">**Rounding Multi-Digit Numbers to Any Place:** Round numbers up to 1,000,000 to the nearest 10, 100, 1,000, 10,000, or 100,000. Use number lines to visualize.
+                                    <p class="assessment-note">Assessment: Student correctly rounds 5/6 given numbers to a specified place value.</p></li>
+                                <li class="intervention-item">**Adding & Subtracting Multi-Digit Whole Numbers (Standard Algorithm):** Fluently add and subtract multi-digit whole numbers up to 1,000,000 using the standard algorithm, ensuring proper regrouping.
+                                    <p class="assessment-note">Assessment: Student accurately solves 3/4 multi-digit addition/subtraction problems (e.g., $34,567 + 12,345$).</p></li>
+                                <li class="intervention-item">**Understanding Place Value to Millions:** Identify the value of each digit in a multi-digit number up to 1,000,000. Read and write numbers in expanded form and number name.
+                                    <p class="assessment-note">Assessment: Given a number like $456,789$, student identifies the value of the 5 and writes the number in expanded form.</p></li>
+                                <li class="intervention-item">**Comparing Multi-Digit Numbers:** Use $<, >, =$ symbols to compare two multi-digit numbers based on the value of their digits in each place.
+                                    <p class="assessment-note">Assessment: Student correctly places the comparison symbol for 5/6 pairs of multi-digit numbers.</p></li>
+                                <li class="intervention-item">**Multiplicative Comparison (e.g., "times as many"):** Understand that multiplication can be used to compare quantities (e.g., "35 is 5 times as many as 7").
+                                    <p class="assessment-note">Assessment: Student writes a multiplication equation to represent a multiplicative comparison statement.</p></li>
+                                <li class="intervention-item">**Problem Solving with All Four Operations:** Solve multi-step word problems involving whole numbers and all four operations, including problems where remainders must be interpreted.
+                                    <p class="assessment-note">Assessment: Student accurately solves 2/3 multi-step word problems involving mixed operations.</p></li>
+                                <li class="intervention-item">**Factors and Multiples:** Find all factor pairs for a whole number up to 100. Identify multiples of single-digit numbers.
+                                    <p class="assessment-note">Assessment: Student lists all factors of 24 and identifies 3 multiples of 7.</p></li>
+                                <li class="intervention-item">**Prime and Composite Numbers:** Differentiate between prime and composite numbers up to 100.
+                                    <p class="assessment-note">Assessment: Student correctly identifies 4/5 given numbers (e.g., 17, 21, 29) as prime or composite.</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Fractions -->
+                        <div>
+                            <h4 class="text-lg font-medium text-blue-700 mb-2">Fractions</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Adding & Subtracting Fractions (Like Denominators):** Model addition/subtraction of fractions with like denominators using visual aids (fraction bars/circles) and applying algorithms.
+                                    <p class="assessment-note">Assessment: Student accurately solves 4/5 fraction addition/subtraction problems with like denominators.</p></li>
+                                <li class="intervention-item">**Multiplying Fractions by Whole Numbers:** Use visual fraction models (e.g., repeated addition on a number line, groups of fractions) to show multiplication of a fraction by a whole number.
+                                    <p class="assessment-note">Assessment: Student accurately solves 3/4 problems multiplying a fraction by a whole number, using a model.</p></li>
+                                <li class="intervention-item">**Comparing Fractions with Different Denominators:** Find common denominators or use benchmark fractions (e.g., $0, 1/2, 1$) to compare fractions.
+                                    <p class="assessment-note">Assessment: Student correctly compares 4/5 pairs of fractions with different denominators using a strategy.</p></li>
+                                <li class="intervention-item">**Generating Equivalent Fractions:** Explain why fractions are equivalent using visual models. Generate equivalent fractions by multiplying numerator and denominator by the same number.
+                                    <p class="assessment-note">Assessment: Student generates 2 equivalent fractions for a given fraction (e.g., $2/3$) and explains why they are equivalent.</p></li>
+                                <li class="intervention-item">**Decomposing Fractions:** Decompose a fraction into a sum of fractions with the same denominator in more than one way (e.g., $3/5 = 1/5 + 1/5 + 1/5$).
+                                    <p class="assessment-note">Assessment: Student shows two different ways to decompose a given fraction (e.g., $4/6$).</p></li>
+                                <li class="intervention-item">**Adding Mixed Numbers (Like Denominators):** Add mixed numbers with like denominators.
+                                    <p class="assessment-note">Assessment: Student accurately solves 3/4 addition problems involving mixed numbers with like denominators.</p></li>
+                                <li class="intervention-item">**Subtracting Mixed Numbers (Like Denominators):** Subtract mixed numbers with like denominators.
+                                    <p class="assessment-note">Assessment: Student accurately solves 3/4 subtraction problems involving mixed numbers with like denominators.</p></li>
+                                <li class="intervention-item">**Solving Word Problems involving Fractions:** Solve word problems involving addition, subtraction, and multiplication of fractions (by whole numbers), using visual fraction models and equations.
+                                    <p class="assessment-note">Assessment: Student accurately solves 2/3 fraction word problems using a model or equation.</p></li>
+                                <li class="intervention-item">**Relating Fractions to Decimals (Tenths & Hundredths):** Understand fractions with denominators of 10 and 100. Write fractions as decimals.
+                                    <p class="assessment-note">Assessment: Student correctly converts 3/4 fractions (e.g., $7/10, 25/100$) to decimals and vice versa.</p></li>
+                                <li class="intervention-item">**Comparing Decimals to Hundredths:** Compare two decimals to hundredths by reasoning about their size.
+                                    <p class="assessment-note">Assessment: Student correctly places $<, >, =$ between two decimals to the hundredths place.</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Measurement and Data -->
+                        <div>
+                            <h4 class="text-lg font-medium text-blue-700 mb-2">Measurement and Data</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Conversions (Metric & Customary Length/Mass/Volume):** Convert measurements within a single system (e.g., feet to inches, pounds to ounces, liters to milliliters) using conversion tables.
+                                    <p class="assessment-note">Assessment: Student accurately converts 4/5 given measurements (e.g., 3 feet to inches, 2 kg to grams).</p></li>
+                                <li class="intervention-item">**Data Analysis with Line Plots (Fractions):** Create and interpret line plots to display a data set of measurements in fractions of a unit ($1/2, 1/4, 1/8$). Solve problems involving addition/subtraction of fractions on the line plot.
+                                    <p class="assessment-note">Assessment: Student creates a line plot from fractional data and answers 3 questions about it.</p></li>
+                                <li class="intervention-item">**Area & Perimeter Word Problems:** Solve real-world and mathematical problems involving perimeter and area of rectangles. Use formulas where appropriate.
+                                    <p class="assessment-note">Assessment: Student solves 2/3 word problems requiring finding area or perimeter of a rectangle.</p></li>
+                                <li class="intervention-item">**Telling Time & Elapsed Time (Multi-Step):** Solve multi-step word problems involving elapsed time (addition and subtraction of time intervals).
+                                    <p class="assessment-note">Assessment: Student accurately solves 2/3 multi-step elapsed time problems (e.g., from 8:30 AM to 1:15 PM).</p></li>
+                                <li class="intervention-item">**Measuring Angles with a Protractor:** Understand concepts of angles. Measure and draw angles in whole-number degrees using a protractor.
+                                    <p class="assessment-note">Assessment: Student measures 3/4 given angles accurately with a protractor (within 5 degrees).</p></li>
+                                <li class="intervention-item">**Classifying Angles (Acute, Obtuse, Right, Straight):** Identify and classify angles as acute, obtuse, right, or straight.
+                                    <p class="assessment-note">Assessment: Student correctly classifies 5/6 visual representations of angles.</p></li>
+                                <li class="intervention-item">**Understanding Money: Making Change & Multi-Step Problems:** Solve multi-step word problems involving all four operations with money, including calculating change.
+                                    <p class="assessment-note">Assessment: Student accurately solves a 2-step money word problem involving giving change.</p></li>
+                                <li class="intervention-item">**Interpreting Data from Charts and Graphs (Complex):** Analyze and interpret information presented in various charts and graphs, including those with multiple data sets.
+                                    <p class="assessment-note">Assessment: Student answers 3/4 complex interpretive questions about a given double bar graph.</p></li>
+                                <li class="intervention-item">**Drawing Lines of Symmetry:** Draw lines of symmetry for two-dimensional figures. Identify symmetrical figures.
+                                    <p class="assessment-note">Assessment: Student accurately draws all lines of symmetry for 3 given symmetrical shapes.</p></li>
+                                <li class="intervention-item">**Understanding Angles in Circles:** Relate fractions of a circle to angle measurement (e.g., a $1/4$ turn is $90^\circ$).
+                                    <p class="assessment-note">Assessment: Student identifies the angle measure for a $1/2$ or $1/4$ turn around a circle.</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- 4th Grade Reading Interventions -->
+                <div id="interventions-4th-reading" class="intervention-section border-t border-gray-200 mt-4 pt-4">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">4th Grade Reading Interventions</h3>
+                    <div class="space-y-4">
+                        <!-- Category: Reading Comprehension: Literature -->
+                        <div>
+                            <h4 class="text-lg font-medium text-lime-700 mb-2">Comprehension: Literature</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Summarizing Literary Texts (including Theme):** Develop comprehensive summaries of literary texts, including main characters, setting, problem, key events, and the story's theme or central message.
+                                    <p class="assessment-note">Assessment: Student writes a multi-paragraph summary of a literary text, including all main story elements and the theme.</p></li>
+                                <li class="intervention-item">**Analyzing Themes & Central Ideas:** Identify the theme or central idea of a story. Explain how it is conveyed through details, character actions, and events. Differentiate between main idea and theme.
+                                    <p class="assessment-note">Assessment: Student identifies the theme of a story and provides 2-3 specific text examples that support it.</p></li>
+                                <li class="intervention-item">**Analyzing Character Development & Motivation:** Describe how a character changes throughout a story. Analyze character motivations and how they influence the plot and other characters.
+                                    <p class="assessment-note">Assessment: Student describes a character's change over time and explains their primary motivation, citing evidence.</p></li>
+                                <li class="intervention-item">**Understanding Point of View (First-person, Third-person limited/omniscient):** Compare and contrast the point of view from which different stories are narrated. Explain how POV affects the story.
+                                    <p class="assessment-note">Assessment: Student identifies the narrator's POV and explains how it influences what the reader knows/feels about events/characters.</p></li>
+                                <li class="intervention-item">**Inferencing (Complex):** Make deeper inferences about characters' unspoken feelings, the reasons behind events, or future outcomes based on subtle textual clues and prior knowledge.
+                                    <p class="assessment-note">Assessment: Student makes 3/4 valid, multi-faceted inferences from literary texts, citing multiple supporting clues.</p></li>
+                                <li class="intervention-item">**Analyzing Setting's Influence:** Discuss how the setting (time and place) influences the plot, characters, and overall mood of a story.
+                                    <p class="assessment-note">Assessment: Student explains how the setting contributed to the problem or mood of the story.</p></li>
+                                <li class="intervention-item">**Identifying and Interpreting Figurative Language:** Identify and interpret the meaning of various figurative language devices (similes, metaphors, idioms, proverbs, hyperbole, personification) within context.
+                                    <p class="assessment-note">Assessment: Student identifies 4/5 instances of figurative language and explains their meaning to the story.</p></li>
+                                <li class="intervention-item">**Analyzing Plot Structure (Conflict, Climax, Resolution):** Analyze how the plot unfolds, including the introduction of conflict, rising action, climax, falling action, and resolution.
+                                    <p class="assessment-note">Assessment: Student accurately identifies the climax and resolution of a narrative text.</p></li>
+                                <li class="intervention-item">**Comparing & Contrasting Elements Across Texts:** Compare and contrast elements (e.g., themes, settings, plot, characters) from two or more stories, citing specific evidence from each text.
+                                    <p class="assessment-note">Assessment: Student writes a compare/contrast paragraph for two stories, highlighting 2 similarities and 2 differences in theme or character.</p></li>
+                                <li class="intervention-item">**Asking & Answering Text-Dependent Questions:** Formulate and answer increasingly complex text-dependent questions that require analysis, synthesis, and inference.
+                                    <p class="assessment-note">Assessment: Student generates and answers 2 inferential questions about a text, supported by evidence.</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Reading Comprehension: Informational Text -->
+                        <div>
+                            <h4 class="text-lg font-medium text-lime-700 mb-2">Comprehension: Informational Text</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Integrating Information from Two Texts:** Synthesize information from two or more texts on the same topic to write or speak knowledgeably about the subject.
+                                    <p class="assessment-note">Assessment: Student answers a question by combining information from two different informational texts.</p></li>
+                                <li class="intervention-item">**Analyzing Text Structure (Cause/Effect, Problem/Solution, Compare/Contrast, Description, Sequence):** Deepen understanding of text structures. Analyze how the chosen structure contributes to the author's purpose and presentation of information.
+                                    <p class="assessment-note">Assessment: Student identifies the primary text structure of a text and explains how it helps organize information.</p></li>
+                                <li class="intervention-item">**Determining Main Idea and Supporting Details (Complex):** Identify the main idea of multi-paragraph texts and locate multiple, varied key details that fully support it. Use outlining or summarizing strategies.
+                                    <p class="assessment-note">Assessment: Student completes an outline for a 3-paragraph text, extracting main ideas and 3 supporting details per paragraph.</p></li>
+                                <li class="intervention-item">**Interpreting Information from Visuals (Diagrams, Maps, Timelines, Charts):** Analyze information presented in complex diagrams, maps, timelines, and charts within informational texts.
+                                    <p class="assessment-note">Assessment: Student accurately answers 3/4 questions by interpreting a complex diagram or timeline from the text.</p></li>
+                                <li class="intervention-item">**Author's Purpose & Point of View:** Analyze why an author wrote a particular informational text and evaluate their point of view or bias.
+                                    <p class="assessment-note">Assessment: Student explains the author's purpose (e.g., inform, persuade) and identifies potential bias in a text.</p></li>
+                                <li class="intervention-item">**Summarizing Informational Text (Objective):** Write objective summaries of informational texts, avoiding personal opinions and focusing only on the main points and key details.
+                                    <p class="assessment-note">Assessment: Student writes a 4-5 sentence objective summary of a 2-page informational text.</p></li>
+                                <li class="intervention-item">**Citing Textual Evidence:** Practice explicitly citing evidence from the text to support answers to questions and statements.
+                                    <p class="assessment-note">Assessment: Student provides direct quotes or paraphrases from the text to support 3/4 answers.</p></li>
+                                <li class="intervention-item">**Understanding Technical Information:** Break down complex technical or scientific information into simpler terms.
+                                    <p class="assessment-note">Assessment: Student explains a scientific process described in the text in their own words.</p></li>
+                                <li class="intervention-item">**Research Skills (Using Multiple Sources):** Use multiple print and digital sources to gather information on a topic. Evaluate the credibility of sources (introduction).
+                                    <p class="assessment-note">Assessment: Student locates information from two different online encyclopedias about a given animal.</p></li>
+                                <li class="intervention-item">**Understanding Firsthand vs. Secondhand Accounts:** Differentiate between firsthand (eyewitness) and secondhand (reported) accounts of events.
+                                    <p class="assessment-note">Assessment: Student identifies whether a given passage is a firsthand or secondhand account and explains why.</p></li>
+                            </ul>
+                        </div>
+                        <!-- Category: Vocabulary -->
+                        <div>
+                            <h4 class="text-lg font-medium text-lime-700 mb-2">Vocabulary</h4>
+                            <ul class="list-disc pl-5 space-y-1 text-gray-700">
+                                <li class="intervention-item">**Academic Vocabulary Acquisition (Tier 2 & 3 Words):** Systematically pre-teach and review Tier 2 (cross-curricular) and Tier 3 (content-specific) vocabulary using robust strategies like concept sorts, word maps, and Frayer models.
+                                    <p class="assessment-note">Assessment: Student correctly defines and uses 4/5 target Tier 2/3 words in a sentence or oral explanation.</p></li>
+                                <li class="intervention-item">**Understanding Roots and Affixes (Greek & Latin):** Introduce common Greek and Latin roots (e.g., 'bio', 'geo', 'auto', 'tele', 'uni') and how they contribute to word meaning. Analyze how prefixes and suffixes change words.
+                                    <p class="assessment-note">Assessment: Student identifies the root/affix in 4/5 words and explains how it contributes to the word's meaning.</p></li>
+                                <li class="intervention-item">**Using Context Clues (Advanced):** Apply a range of context clue strategies (inference, example, definition, synonym, antonym, cause/effect) to determine the meaning of unknown words in complex texts.
+                                    <p class="assessment-note">Assessment: Student accurately determines the meaning of 4/5 unknown words from a 4th-grade text using context clues.</p></li>
+                                <li class="intervention-item">**Interpreting Figurative Language (Idioms, Proverbs, Adages):** Explicitly teach common idioms, proverbs, and adages. Discuss their non-literal meaning and how they contribute to text.
+                                    <p class="assessment-note">Assessment: Student identifies the meaning of 3/4 common idioms or proverbs in context.</p></li>
+                                <li class="intervention-item">**Homophones, Homographs, and Homonyms:** Differentiate between words that sound alike, look alike, or both, but have different meanings.
+                                    <p class="assessment-note">Assessment: Student explains the difference between homophones (e.g., 'their'/'there'/'they're') and uses them correctly in sentences.</p></li>
+                                <li class="intervention-item">**Reference Materials (Dictionary, Thesaurus, Digital Resources):** Proficiently use print and digital dictionaries and thesauruses to find definitions, synonyms, antonyms, and correct spelling.
+                                    <p class="assessment-note">Assessment: Student uses a thesaurus to find a synonym for a given word and then uses it correctly in a sentence.</p></li>
+                                <li class="intervention-item">**Word Relationships (Categorization, Analogies, Denotation/Connotation):** Explore more complex word relationships. Analyze the subtle differences in meaning between synonyms.
+                                    <p class="assessment-note">Assessment: Student correctly categorizes 8/10 words (e.g., 'verbs of movement'), or completes 3/4 analogies correctly.</p></li>
+                                <li class="intervention-item">**Vocabulary from Content Areas:** Focus on explicit instruction of vocabulary specific to science, social studies, and math texts.
+                                    <p class="assessment-note">Assessment: Student defines 4/5 science/social studies vocabulary words and uses them in a short explanation.</p></li>
+                                <li class="intervention-item">**Semantic Feature Analysis:** Use grids to analyze relationships between vocabulary words and distinguishing features.
+                                    <p class="assessment-note">Assessment: Student correctly completes a semantic feature analysis chart for a given set of related vocabulary words.</p></li>
+                                <li class="intervention-item">**Word Consciousness:** Foster an awareness and interest in words, their meanings, and how they are used. Encourage students to seek out new words.
+                                    <p class="assessment-note">Assessment: Student independently identifies 2-3 new words from a text and attempts to define them or use context clues.</p></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all buttons that toggle intervention sections
+            const toggleButtons = document.querySelectorAll('.toggle-interventions');
+
+            toggleButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const grade = this.dataset.grade; // Get the grade level from data-grade attribute
+                    const subject = this.dataset.subject; // Get the subject from data-subject attribute
+                    const interventionSectionId = `interventions-${grade}-${subject}`; // Construct the ID of the target intervention section
+                    const targetSection = document.getElementById(interventionSectionId);
+
+                    if (targetSection) {
+                        // Toggle the 'active' class to expand or collapse the section
+                        targetSection.classList.toggle('active');
+
+                        // Collapse other open sections for the same grade
+                        // This ensures only one subject's interventions are open per grade at a time
+                        const allSectionsInGrade = this.closest('.grade-section').querySelectorAll('.intervention-section');
+                        allSectionsInGrade.forEach(section => {
+                            if (section.id !== interventionSectionId && section.classList.contains('active')) {
+                                section.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Add "Print Assessment" buttons and their functionality
+            const interventionItems = document.querySelectorAll('.intervention-item');
+            interventionItems.forEach((item) => {
+                const assessmentNoteP = item.querySelector('.assessment-note');
+                if (assessmentNoteP) {
+                    const button = document.createElement('button');
+                    button.textContent = 'Print Assessment';
+                    button.className = 'print-assessment-btn text-xs bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-1 px-2 rounded-full transition duration-150 ease-in-out';
+
+                    // Insert button after the assessment note paragraph within the flex container
+                    assessmentNoteP.insertAdjacentElement('afterend', button);
+
+                    button.addEventListener('click', function() {
+                        const listItem = this.closest('.intervention-item');
+
+                        // Extract the bolded intervention title
+                        const interventionTitleNode = listItem.querySelector('strong');
+                        const interventionTitle = interventionTitleNode ? interventionTitleNode.textContent.replace(/\*\*/g, '').trim() : 'Intervention Title N/A';
+
+                        // Extract the text of the intervention description, excluding the title and the assessment note
+                        let interventionDescription = '';
+                        for (let node of listItem.childNodes) {
+                            if (node === assessmentNoteP) break; // Stop before the assessment note
+                            if (node.nodeType === Node.TEXT_NODE && node.textContent.trim().length > 0) {
+                                interventionDescription += node.textContent.trim();
+                            }
+                        }
+                        // Remove the title from the description if it's there
+                        if (interventionDescription.startsWith(interventionTitle + ':')) {
+                            interventionDescription = interventionDescription.substring(interventionTitle.length + 1).trim();
+                        }
+
+
+                        const assessmentNote = assessmentNoteP.textContent.replace('Assessment:', '').trim();
+
+                        const categoryHeading = listItem.closest('div').querySelector('h4');
+                        const category = categoryHeading ? categoryHeading.textContent.trim() : 'N/A';
+
+                        const gradeSection = listItem.closest('.grade-section');
+                        const gradeTitle = gradeSection.querySelector('h2').childNodes[0].nodeValue.trim();
+
+                        let subject = 'N/A';
+                        const parentInterventionSection = listItem.closest('.intervention-section');
+                        if (parentInterventionSection) {
+                            if (parentInterventionSection.id.includes('math')) {
+                                subject = 'Math';
+                            } else if (parentInterventionSection.id.includes('reading')) {
+                                subject = 'Reading';
+                            }
+                        }
+
+                        // Call function to open a new window with printable assessment
+                        openPrintableAssessment(gradeTitle, subject, category, interventionTitle, interventionDescription, assessmentNote);
+                    });
+                }
+            });
+
+            // Function to open a new window with the printable assessment content
+            function openPrintableAssessment(grade, subject, category, interventionTitle, interventionDescription, assessmentNote) {
+                const documentTitle = `${grade} ${subject}: ${interventionTitle} - Assessment`;
+                const printableContent = `
+                    <div style="font-family: 'Inter', sans-serif; padding: 20px; max-width: 800px; margin: auto;">
+                        <h1 style="font-size: 2em; font-weight: bold; text-align: center; margin-bottom: 20px;">${documentTitle}</h1>
+                        <hr style="border: 1px solid #ddd; margin-bottom: 20px;">
+
+                        <h2 style="font-size: 1.5em; font-weight: bold; margin-bottom: 10px;">Intervention Focus:</h2>
+                        <p style="margin-bottom: 20px;">${interventionDescription}</p>
+
+                        <hr style="border: 1px solid #ddd; margin-bottom: 20px;">
+
+                        <h2 style="font-size: 1.5em; font-weight: bold; margin-bottom: 10px;">Assessment Purpose:</h2>
+                        <p style="margin-bottom: 20px;">To evaluate student mastery and identify areas for further support in "${interventionTitle}."</p>
+
+                        <hr style="border: 1px solid #ddd; margin-bottom: 20px;">
+
+                        <h2 style="font-size: 1.5em; font-weight: bold; margin-bottom: 10px;">Specific Assessment Task/Method:</h2>
+                        <p style="margin-bottom: 20px;">${assessmentNote}</p>
+
+                        <hr style="border: 1px solid #ddd; margin-bottom: 20px;">
+
+                        <h2 style="font-size: 1.5em; font-weight: bold; margin-bottom: 10px;">General Assessment Procedure:</h2>
+                        <ul style="list-style-type: disc; padding-left: 20px; margin-bottom: 20px;">
+                            <li>Prepare necessary materials as indicated in the "Specific Assessment Task/Method."</li>
+                            <li>Explain the task clearly to the student.</li>
+                            <li>Observe the student's performance against the criteria.</li>
+                            <li>Record data on an appropriate tracking tool (e.g., rubric, checklist, frequency count).</li>
+                            <li>Analyze results to inform next steps in instruction and intervention.</li>
+                        </ul>
+
+                        <hr style="border: 1px solid #ddd; margin-bottom: 20px;">
+
+                        <p style="font-size: 0.9em; color: #555;">
+                            **Grade Level:** ${grade}<br>
+                            **Subject Area:** ${subject}<br>
+                            **Category:** ${category}
+                        </p>
+                    </div>
+                `;
+
+                const newWindow = window.open('', '_blank');
+                newWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>${documentTitle}</title>
+                        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+                        <style>
+                            body { font-family: 'Inter', sans-serif; line-height: 1.6; margin: 0; padding: 0; background-color: #ffffff; }
+                            .print-button {
+                                padding: 10px 20px;
+                                font-size: 1em;
+                                background-color: #4CAF50;
+                                color: white;
+                                border: none;
+                                border-radius: 5px;
+                                cursor: pointer;
+                                transition: background-color 0.3s ease;
+                            }
+                            .print-button:hover {
+                                background-color: #45a049;
+                            }
+                            @media print {
+                                .print-button {
+                                    display: none; /* Hide the print button when printing */
+                                }
+                            }
+                            h1, h2, h3, h4 { margin-top: 1em; margin-bottom: 0.5em; }
+                            ul { list-style-type: disc; margin-left: 20px; }
+                            p { margin-bottom: 1em; }
+                        </style>
+                    </head>
+                    <body>
+                        ${printableContent}
+                        <div style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
+                            <button class="print-button" onclick="window.print()">Print Document</button>
+                        </div>
+                    </body>
+                    </html>
+                `);
+                newWindow.document.close();
+            }
+        });
+    </script>
+</body>
+</html>
+
